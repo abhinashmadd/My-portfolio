@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# Data files (contains messages - sensitive)
+data/
+
+# Portable git artifacts
+.git-portable.exe
+
+# OS files
+Thumbs.db
+.DS_Store

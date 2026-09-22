@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Primary Meta Tags -->
+  <title>Abhinash Maddeshiya | B.Tech ECE Student | Software & Web Developer</title>
+  <meta name="title" content="Abhinash Maddeshiya | B.Tech ECE Student | Software & Web Developer">
+  <meta name="description"
+    content="Portfolio of Abhinash Maddeshiya - B.Tech ECE student, Software & Web Developer, Hackathon Finalist, specializing in Node.js, Python, IoT, and AI-powered applications.">
+  <meta name="keywords"
+    content="Abhinash Maddeshiya, Portfolio, Software Developer, Web Developer, IoT, Artificial Intelligence, Node.js, Python, HackIndia Finalist">
+  <meta name="author" content="Abhinash Maddeshiya">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Abhinash Maddeshiya | Portfolio">
+  <meta property="og:description"
+    content="Explore projects, skills, and hackathon achievements in Web Development, AI, and IoT by Abhinash Maddeshiya.">
+  <meta property="og:image" content="assets/avatar.jpg">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Background Ambient Glows -->
+  <div class="ambient-glow glow-top" aria-hidden="true"></div>
+  <div class="ambient-glow glow-bottom" aria-hidden="true"></div>
+  <div class="ambient-glow glow-center" aria-hidden="true"></div>
+
+  <!-- Scroll Progress Indicator -->
+  <div id="scrollProgress" class="scroll-progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+    aria-valuemax="100"></div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- Navigation Bar -->
+  <header class="site-header" id="siteHeader">
+    <div class="container nav-container">
+      <a href="#hero" class="brand-logo" aria-label="Abhinash Maddeshiya Homepage">
+        <span class="logo-symbol">&lt;AM/&gt;</span>
+        <span class="logo-text">Abhinash<span class="accent-dot">.</span></span>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="desktop-nav" aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#skills" class="nav-link">Skills</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#achievements" class="nav-link">Achievements</a></li>
+          <li><a href="#education" class="nav-link">Education</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Nav Action Buttons -->
+      <div class="nav-actions">
+        <button id="themeToggle" class="icon-btn theme-toggle-btn" aria-label="Toggle light or dark theme"
+          title="Toggle theme">
+          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2" />
+            <path d="M12 20v2" />
+            <path d="m4.93 4.93 1.41 1.41" />
+            <path d="m17.66 17.66 1.41 1.41" />
+            <path d="M2 12h2" />
+            <path d="M20 12h2" />
+            <path d="m6.34 17.66-1.41 1.41" />
+            <path d="m19.07 4.93-1.41 1.41" />
+          </svg>
+          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+          </svg>
+        </button>
+
+        <a href="#contact" class="btn btn-outline btn-sm nav-cta">Let's Talk</a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobileMenuBtn" class="icon-btn mobile-menu-btn" aria-label="Toggle navigation menu"
+          aria-expanded="false" aria-controls="mobileDrawer">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Navigation -->
+    <div id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
+      <ul class="mobile-nav-links">
+        <li><a href="#about" class="mobile-nav-link">About</a></li>
+        <li><a href="#skills" class="mobile-nav-link">Skills</a></li>
+        <li><a href="#projects" class="mobile-nav-link">Projects</a></li>
+        <li><a href="#achievements" class="mobile-nav-link">Achievements</a></li>
+        <li><a href="#education" class="mobile-nav-link">Education</a></li>
+        <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+        <li class="mobile-drawer-cta">
+          <a href="#contact" class="btn btn-primary btn-block">Get In Touch</a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="mainContent">
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="hero-section">
+      <div class="container hero-container">
+
+        <div class="hero-content">
+          <!-- Availability Badge -->
+          <div class="status-badge" data-reveal="fade-up">
+            <span class="status-indicator"></span>
+            <span class="status-text">Available for Tech Internships &amp; Opportunities</span>
+          </div>
+
+          <!-- Hero Headline -->
+          <h1 class="hero-title" data-reveal="fade-up">
+            Hi, I'm <span class="gradient-text">Abhinash Maddeshiya</span>
+          </h1>
+
+          <!-- Role Subtitle -->
+          <p class="hero-subtitle" data-reveal="fade-up">
+            <strong>B.Tech (ECE) Student</strong> &amp; <strong>Developer</strong> building practical, high-impact
+            solutions across
+            <span class="highlight-chip">Software &amp; Web Development</span>,
+            <span class="highlight-chip">AI-Powered Applications</span>, and
+            <span class="highlight-chip">IoT Systems</span>.
+          </p>
+
+          <!-- Contact Quick Info Chips -->
+          <div class="hero-meta-bar" data-reveal="fade-up">
+            <span class="meta-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              Greater Noida, UP, India
+            </span>
+            <button class="meta-item copyable-chip" data-copy="absmadd@gmail.com" title="Click to copy email">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect width="20" height="16" x="2" y="4" rx="2" />
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+              </svg>
+              <span>absmadd@gmail.com</span>
+              <span class="copy-badge">Copy</span>
+            </button>
+            <button class="meta-item copyable-chip" data-copy="+918881179002" title="Click to copy phone">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+              <span>+91 8881179002</span>
+              <span class="copy-badge">Copy</span>
+            </button>
+          </div>
+
+          <!-- Hero Action Buttons -->
+          <div class="hero-actions" data-reveal="fade-up">
+            <a href="#projects" class="btn btn-primary">
+              <span>View Projects</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </a>
+            <button id="openResumeModalBtn" class="btn btn-secondary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+                <polyline points="10 9 9 9 8 9" />
+              </svg>
+              <span>View Resume</span>
+            </button>
+            <a href="assets/Abhinash_Maddeshiya_Resume.pdf" download="Abhinash_Maddeshiya_Resume.pdf"
+              class="btn btn-secondary" title="Download official PDF resume">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              <span>Download Resume</span>
+            </a>
+            <a href="#contact" class="btn btn-outline">
+              <span>Contact Me</span>
+            </a>
+          </div>
+
+          <!-- Social Links Bar -->
+          <div class="hero-socials" data-reveal="fade-up">
+            <a href="https://github.com/abhinashmadd" target="_blank" rel="noopener noreferrer" class="social-icon-link"
+              aria-label="GitHub Profile">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+                <path d="M9 18c-4.51 2-5-2-7-2" />
+              </svg>
+              <span>GitHub</span>
+            </a>
+            <a href="https://linkedin.com/in/abhinash-Maddeshiya" target="_blank" rel="noopener noreferrer"
+              class="social-icon-link" aria-label="LinkedIn Profile">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                <rect width="4" height="12" x="2" y="9" />
+                <circle cx="4" cy="4" r="2" />
+              </svg>
+              <span>LinkedIn</span>
+            </a>
+            <a href="https://www.instagram.com/abs_335011?stkn=bnkzaHZqNnZ6NnN3" target="_blank"
+              rel="noopener noreferrer" class="social-icon-link" aria-label="Instagram Profile">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+              </svg>
+              <span>Instagram</span>
+            </a>
+            <a href="https://www.facebook.com/share/1FL9JxhygY/" target="_blank" rel="noopener noreferrer"
+              class="social-icon-link" aria-label="Facebook Profile">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+              </svg>
+              <span>Facebook</span>
+            </a>
+            <a href="mailto:absmadd@gmail.com" class="social-icon-link" aria-label="Send Email">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect width="20" height="16" x="2" y="4" rx="2" />
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+              </svg>
+              <span>Email</span>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Hero Visual Showcase -->
+        <div class="hero-visual" data-reveal="fade-left">
+          <div class="avatar-card-wrapper">
+            <div class="avatar-glow-ring"></div>
+            <div class="avatar-card glass-panel">
+              <img src="assets/avatar.jpg" alt="Abhinash Maddeshiya - Software Developer" class="hero-avatar-img"
+                width="400" height="400" loading="eager">
+              <div class="avatar-overlay">
+                <span class="avatar-badge">B.Tech (ECE) Developer</span>
+                <p class="avatar-caption">Passionate Builder &amp; Tech Enthusiast</p>
+              </div>
+            </div>
+
+            <!-- Floating Tech Badges -->
+            <div class="floating-badge badge-top-right glass-card">
+              <span class="badge-icon">⚡</span>
+              <div>
+                <strong>Hackathon Finalist</strong>
+                <span>Hackindia 2026</span>
+              </div>
+            </div>
+
+            <div class="floating-badge badge-bottom-left glass-card">
+              <span class="badge-icon">🤖</span>
+              <div>
+                <strong>AI &amp; Automation</strong>
+                <span>Python &amp; Workflows</span>
+              </div>
+            </div>
+
+            <div class="floating-badge badge-mid-left glass-card">
+              <span class="badge-icon">🌐</span>
+              <div>
+                <strong>Full Stack &amp; IoT</strong>
+                <span>Node.js &amp; MySQL</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Quick Highlights Metric Strip -->
+      <div class="container hero-stats-container" data-reveal="fade-up">
+        <div class="stats-strip glass-panel">
+          <div class="stat-card">
+            <span class="stat-number">Finalist</span>
+            <span class="stat-label">HackIndia AI &amp; Web3 Hackathon</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-card">
+            <span class="stat-number">B.Tech ECE</span>
+            <span class="stat-label">LIET Greater Noida (Pursuing)</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-card">
+            <span class="stat-number">4+</span>
+            <span class="stat-label">Certifications &amp; Workshops</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-card">
+            <span class="stat-number">3+</span>
+            <span class="stat-label">Core Domains (Web, AI, IoT)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="section about-section">
+      <div class="container">
+
+        <div class="section-header" data-reveal="fade-up">
+          <span class="section-badge">Background &amp; Focus</span>
+          <h2 class="section-title">About Me</h2>
+          <p class="section-subtitle">Bridging practical software engineering, artificial intelligence concepts, and
+            connected hardware to build purposeful applications.</p>
+        </div>
+
+        <div class="about-grid">
+
+          <!-- Summary Card -->
+          <div class="about-main-card glass-panel" data-reveal="fade-right">
+            <div class="card-header-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+              <h3>Professional Summary</h3>
+            </div>
+            <p class="about-text">
+              I am a <strong>B.Tech ECE (Electronics &amp; Communication Engineering) student</strong> with hands-on
+              exposure to <strong>Python, C, JavaScript, Web Development, IoT, and AI concepts</strong>.
+              My journey is driven by an intense curiosity for building practical technology solutions, solving
+              real-world challenges through code, and competing in fast-paced hackathons.
+            </p>
+            <p class="about-text">
+              Whether architecting an AI-powered accounting workflow to automate tedious compliance tasks, developing an
+              agricultural marketplace like <em>Kissan Valley</em> to empower farmers, or exploring embedded IoT
+              hardware innovations, I thrive on turning ideas into functional software systems.
+            </p>
+
+            <div class="declaration-quote">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z" />
+                <path
+                  d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z" />
+              </svg>
+              <span>"Passionate about building scalable, human-centered systems that convert complex technology into
+                seamless daily experiences."</span>
+            </div>
+          </div>
+
+          <!-- Strengths & Areas of Interest -->
+          <div class="about-sidebar">
+
+            <!-- Personal Strengths -->
+            <div class="info-card glass-panel" data-reveal="fade-left">
+              <h3 class="info-card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path
+                    d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+                </svg>
+                Personal Strengths
+              </h3>
+              <ul class="strengths-list">
+                <li>
+                  <div class="strength-icon">🧠</div>
+                  <div>
+                    <strong>Problem Solving &amp; Logical Thinking</strong>
+                    <p>Methodical approach to algorithmic challenges and system architecture.</p>
+                  </div>
+                </li>
+                <li>
+                  <div class="strength-icon">🚀</div>
+                  <div>
+                    <strong>Willingness to Learn New Technologies</strong>
+                    <p>Quick to adopt emerging tech stacks, AI frameworks, and hardware paradigms.</p>
+                  </div>
+                </li>
+                <li>
+                  <div class="strength-icon">🛠️</div>
+                  <div>
+                    <strong>Interest in Practical Technology Solutions</strong>
+                    <p>Focused on shipping pragmatic applications that solve tangible user problems.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Areas of Interest -->
+            <div class="info-card glass-panel" data-reveal="fade-left" data-reveal-delay="100">
+              <h3 class="info-card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
+                </svg>
+                Areas of Interest
+              </h3>
+              <div class="interest-chips">
+                <span class="interest-chip">Frontend Development</span>
+                <span class="interest-chip">Backend Development</span>
+                <span class="interest-chip">Web Development</span>
+                <span class="interest-chip">Internet of Things (IoT)</span>
+                <span class="interest-chip">AI-Powered Applications</span>
+                <span class="interest-chip">Software Development</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- TECHNICAL SKILLS SECTION -->
+    <section id="skills" class="section skills-section">
+      <div class="container">
+
+        <div class="section-header" data-reveal="fade-up">
+          <span class="section-badge">Toolkit &amp; Expertise</span>
+          <h2 class="section-title">Technical Skills</h2>
+          <p class="section-subtitle">A balanced toolkit spanning modern programming, backend databases, data libraries,
+            and connected IoT systems.</p>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="skills-filter-bar" data-reveal="fade-up">
+          <button class="filter-tab active" data-filter="all">All Skills</button>
+          <button class="filter-tab" data-filter="languages">Programming Languages</button>
+          <button class="filter-tab" data-filter="web">Web &amp; Backend</button>
+          <button class="filter-tab" data-filter="data">Data &amp; AI</button>
+          <button class="filter-tab" data-filter="tools">IoT &amp; Tools</button>
+        </div>
+
+        <!-- Skills Grid -->
+        <div class="skills-grid" id="skillsGrid">
+
+          <!-- Python -->
+          <div class="skill-card glass-panel" data-category="languages" data-reveal="zoom-in">
+            <div class="skill-card-top">
+              <div class="skill-icon-badge py-badge">Py</div>
+              <div class="skill-meta">
+                <h4 class="skill-name">Python</h4>
+                <span class="skill-category-label">Programming Language</span>
+              </div>
+            </div>
+            <p class="skill-desc">Scripting, data analysis with NumPy/Pandas, AI workflows, and problem solving.</p>
+            <div class="skill-tags">
+              <span>NumPy</span>
+              <span>Pandas</span>
+              <span>Automation</span>
+            </div>
+          </div>
+
+          <!-- JavaScript -->
+          <div class="skill-card glass-panel" data-category="languages web" data-reveal="zoom-in">
+            <div class="skill-card-top">
+              <div class="skill-icon-badge js-badge">JS</div>
+              <div class="skill-meta">
+                <h4 class="skill-name">JavaScript (ES6+)</h4>
+                <span class="skill-category-label">Languages &amp; Web</span>
+              </div>
+            </div>
+            <p class="skill-desc">Dynamic DOM interaction, asynchronous APIs, event-driven web applications.</p>
+            <div class="skill-tags">
+              <span>ES6+</span>
+              <span>Async/Await</span>
+              <span>DOM APIs</span>
+            </div>
+          </div>
+
+          <!-- C Language -->
+          <div class="skill-card glass-panel" data-category="languages" data-reveal="zoom-in">
+            <div class="skill-card-top">
+              <div class="skill-icon-badge c-badge">C</div>
+              <div class="skill-meta">
+                <h4 class="skill-name">C Programming</h4>
+                <span class="skill-category-label">Core Systems</span>
+              </div>
+            </div>
+            <p class="skill-desc">Foundational data structures, memory management, algorithmic efficiency, and low-level
+              basics.</p>
+            <div class="skill-tags">
+              <span>Pointers</span>
+              <span>Data Structures</span>
+              <span>Algorithms</span>
+            </div>
+          </div>
+
+          <!-- Node.js -->
+          <div class="skill-card glass-panel" data-category="web" data-reveal="zoom-in">
+            <div class="skill-card-top">
+              <div class="skill-icon-badge node-badge">Node</div>
+              <div class="skill-meta">
+                <h4 class="skill-name">Node.js</h4>
+                <span class="skill-category-label">Backend Environment</span>
+              </div>
+            </div>
+            <p class="skill-desc">Server-side application logic, RESTful API endpoints, and marketplace service
+              integration.</p>
+            <div class="skill-tags">
+              <span>REST APIs</span>
+              <span>Express.js</span>
+              <span>NPM</span>
+            </div>
+          </div>
+
+          <!-- MySQL -->
+          <div class="skill-card glass-panel" data-category="web" data-reveal="zoom-in">
+            <div class="skill-card-top">
+              <div class="skill-icon-badge db-badge">SQL</div>
+              <div class="skill-meta">
+                <h4 class="skill-name">MySQL</h4>
+                <span class="skill-category-label">Relational Database</span>
+              </div>
+            </div>
+            <p class="skill-desc">Relational schema design, structured queries, data integrity, and normalization.</p>
+            <div class="skill-tags">
+              <span>Relational Schema</span>
+              <span>Joins</span>
+              <span>CRUD</span>
+            </div>
+          </div>
+
+          <!-- HTML5 & CSS3 -->
+          <div class="skill-card glass-panel" data-category="web" data-reveal="zoom-in">
+            <div class="skill-card-top">
+              <div class="skill-icon-badge html-badge">Web</div>
+              <div class="skill-meta">
+                <h4 class="skill-name">HTML5 &amp; CSS3</h4>
+                <span class="skill-category-label">Frontend Fundamentals</span>
+              </div>
+            </div>
+            <p class="skill-desc">Semantic responsive layouts, Flexbox/Grid systems, glassmorphism, and custom
+              animations.</p>
+            <div class="skill-tags">
+              <span>Semantic UI</span>
+              <span>Flexbox / Grid</span>
+              <span>CSS Animations</span>
+            </div>
+          </div>
+
+          <!-- NumPy & Pandas -->
+          <div class="skill-card glass-panel" data-category="data" data-reveal="zoom-in">
+            <div class="skill-card-top">
+              <div class="skill-icon-badge data-badge">Data</div>
+              <div class="skill-meta">
+                <h4 class="skill-name">NumPy &amp; Pandas</h4>
+                <span class="skill-category-label">Data Analysis &amp; AI</span>
+              </div>
+            </div>
+            <p class="skill-desc">Numerical vector arrays, structured DataFrame transformations, and dataset cleaning.
+            </p>
+            <div class="skill-tags">
+              <span>DataFrames</span>
+              <span>Vector Math</span>
+              <span>Data Wrangling</span>
+            </div>
+          </div>
+
+          <!-- IoT Technologies -->
+          <div class="skill-card glass-panel" data-category="tools" data-reveal="zoom-in">
+            <div class="skill-card-top">
+              <div class="skill-icon-badge iot-badge">IoT</div>
+              <div class="skill-meta">
+                <h4 class="skill-name">IoT Technologies</h4>
+                <span class="skill-category-label">Hardware &amp; Embedded</span>
+              </div>
+            </div>
+            <p class="skill-desc">Sensor data collection, connected microcontrollers, embedded workflows, and hardware
+              integration.</p>
+            <div class="skill-tags">
+              <span>Microcontrollers</span>
+              <span>Sensors</span>
+              <span>Smart Hardware</span>
+            </div>
+          </div>
+
+          <!-- Git & GitHub -->
+          <div class="skill-card glass-panel" data-category="tools" data-reveal="zoom-in">
+            <div class="skill-card-top">
+              <div class="skill-icon-badge git-badge">Git</div>
+              <div class="skill-meta">
+                <h4 class="skill-name">Git &amp; GitHub</h4>
+                <span class="skill-category-label">Version Control</span>
+              </div>
+            </div>
+            <p class="skill-desc">Distributed version control, branch management, collaborative code repositories, and
+              CI workflows.</p>
+            <div class="skill-tags">
+              <span>Branching</span>
+              <span>PR Workflows</span>
+              <span>Open Source</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- FEATURED PROJECTS SECTION -->
+    <section id="projects" class="section projects-section">
+      <div class="container">
+
+        <div class="section-header" data-reveal="fade-up">
+          <span class="section-badge">Demonstrated Work</span>
+          <h2 class="section-title">Featured Projects</h2>
+          <p class="section-subtitle">Real-world applications tackling automation in professional finance and digital
+            transformation in agriculture.</p>
+        </div>
+
+        <div class="projects-grid">
+
+          <!-- PROJECT 1: AI Chartered Accountants Automation System -->
+          <article class="project-card glass-panel" data-reveal="fade-up">
+            <div class="project-media">
+              <img src="assets/ai-accounting.jpg" alt="AI Chartered Accountants Automation System Dashboard"
+                class="project-img" loading="lazy">
+              <div class="project-media-overlay">
+                <button class="btn btn-primary btn-sm view-details-btn" data-project="ai-ca">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  <span>Explore Project Details</span>
+                </button>
+              </div>
+              <span class="project-badge badge-accent">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon
+                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                </svg>
+                Hackathon Finalist
+              </span>
+            </div>
+
+            <div class="project-content">
+              <div class="project-tags">
+                <span class="tag">AI &amp; Automation</span>
+                <span class="tag">Python</span>
+                <span class="tag">Finance Tech</span>
+                <span class="tag">HackIndia 2026</span>
+              </div>
+
+              <h3 class="project-title">AI Chartered Accountants Automation System</h3>
+              <p class="project-summary">
+                An intelligent automation platform engineered to streamline routine Chartered Accountant workflows, tax
+                reconciliation,
+                and document verification—minimizing human error and repetitive tasks.
+              </p>
+
+              <ul class="project-bullets">
+                <li>Automated repetitive accounting data reconciliation and tax compliance steps.</li>
+                <li>Streamlined document ingestion pipelines with intelligent validation rules.</li>
+                <li>Competed and reached the <strong>final listing / finalist stage</strong> of the HackIndia AI &amp;
+                  Web3 Builders Hackathon.</li>
+              </ul>
+
+              <div class="project-footer">
+                <button class="btn btn-outline btn-sm view-details-btn" data-project="ai-ca">
+                  Read Case Study &amp; Architecture &rarr;
+                </button>
+              </div>
+            </div>
+          </article>
+
+
+          <!-- PROJECT 2: Kissan Valley -->
+          <article class="project-card glass-panel" data-reveal="fade-up" data-reveal-delay="100">
+            <div class="project-media">
+              <img src="assets/kissan-valley.jpg" alt="Kissan Valley Online Agricultural Marketplace Interface"
+                class="project-img" loading="lazy">
+              <div class="project-media-overlay">
+                <button class="btn btn-primary btn-sm view-details-btn" data-project="kissan-valley">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  <span>Explore Project Details</span>
+                </button>
+              </div>
+              <span class="project-badge badge-success">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="m9 12 2 2 4-4" />
+                </svg>
+                AgriTech Marketplace
+              </span>
+            </div>
+
+            <div class="project-content">
+              <div class="project-tags">
+                <span class="tag">Node.js</span>
+                <span class="tag">MySQL</span>
+                <span class="tag">Web Development</span>
+                <span class="tag">Marketplace</span>
+              </div>
+
+              <h3 class="project-title">Kissan Valley | Online Agricultural Marketplace</h3>
+              <p class="project-summary">
+                A dedicated web-based marketplace concept empowering agricultural producers to list harvest crops
+                directly at competitive prices,
+                connecting rural farmers directly with wholesale buyers.
+              </p>
+
+              <ul class="project-bullets">
+                <li>Designed a transparent process connecting regional crop growers with verified buyers across India.
+                </li>
+                <li>Integrated local market location discovery so buyers can procure suitable crops from nearby mandis.
+                </li>
+                <li>Engineered clean responsive interface with crop cataloging, price tracking, and order inquiries.
+                </li>
+              </ul>
+
+              <div class="project-footer">
+                <button class="btn btn-outline btn-sm view-details-btn" data-project="kissan-valley">
+                  Read Case Study &amp; Architecture &rarr;
+                </button>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ACHIEVEMENTS & CERTIFICATIONS SECTION -->
+    <section id="achievements" class="section achievements-section">
+      <div class="container">
+
+        <div class="section-header" data-reveal="fade-up">
+          <span class="section-badge">Credentials &amp; Recognition</span>
+          <h2 class="section-title">Achievements &amp; Certifications</h2>
+          <p class="section-subtitle">Milestones across national-level hackathons, premier engineering workshops, and
+            formal certifications.</p>
+        </div>
+
+        <div class="timeline-container">
+
+          <!-- Item 1: HackIndia -->
+          <div class="timeline-item" data-reveal="fade-up">
+            <div class="timeline-dot-wrapper">
+              <div class="timeline-dot badge-pulse"></div>
+            </div>
+            <div class="timeline-card glass-panel">
+              <div class="timeline-badge-row">
+                <span class="cred-type hackathon-tag">Hackathon Finalist</span>
+                <span class="cred-date">2026</span>
+              </div>
+              <h3 class="timeline-title">Hackindia AI &amp; Web3 Builders Hackathon 2026</h3>
+              <p class="timeline-org">National Stage Developer Hackathon</p>
+              <p class="timeline-desc">
+                Participated as a key team member; developed an innovative automated solution that reached the final
+                listing / finalist stage of the prestigious Hackindia builders challenge.
+              </p>
+            </div>
+          </div>
+
+          <!-- Item 2: FET 100 Workshop IIT Roorkee -->
+          <div class="timeline-item" data-reveal="fade-up">
+            <div class="timeline-dot-wrapper">
+              <div class="timeline-dot"></div>
+            </div>
+            <div class="timeline-card glass-panel">
+              <div class="timeline-badge-row">
+                <span class="cred-type workshop-tag">Specialized Workshop</span>
+                <span class="cred-date">Sept 9, 2026</span>
+              </div>
+              <h3 class="timeline-title">FET 100 Workshop — Field-Effect Transistor Innovation</h3>
+              <p class="timeline-org">IEEE EDS SBC, IIT Roorkee</p>
+              <p class="timeline-desc">
+                Attended in-depth technical sessions on field-effect transistor innovations, semiconductor scaling
+                frontiers, and future intelligent hardware architecture.
+              </p>
+            </div>
+          </div>
+
+          <!-- Item 3: Simplilearn SkillUp AI -->
+          <div class="timeline-item" data-reveal="fade-up">
+            <div class="timeline-dot-wrapper">
+              <div class="timeline-dot"></div>
+            </div>
+            <div class="timeline-card glass-panel">
+              <div class="timeline-badge-row">
+                <span class="cred-type cert-tag">Online Certification</span>
+                <span class="cred-date">Aug 23, 2026</span>
+              </div>
+              <h3 class="timeline-title">Introduction to Artificial Intelligence</h3>
+              <p class="timeline-org">Simplilearn SkillUp</p>
+              <p class="timeline-desc">
+                Successfully mastered foundational concepts in Artificial Intelligence, machine learning paradigms,
+                neural networks, and algorithmic intelligence.
+              </p>
+            </div>
+          </div>
+
+          <!-- Item 4: NIELIT O Level -->
+          <div class="timeline-item" data-reveal="fade-up">
+            <div class="timeline-dot-wrapper">
+              <div class="timeline-dot"></div>
+            </div>
+            <div class="timeline-card glass-panel">
+              <div class="timeline-badge-row">
+                <span class="cred-type cert-tag">National Certification</span>
+                <span class="cred-date">Certified</span>
+              </div>
+              <h3 class="timeline-title">NIELIT 'O' Level Certificate</h3>
+              <p class="timeline-org">National Institute of Electronics &amp; Information Technology (Govt. of India)
+              </p>
+              <p class="timeline-desc">
+                Demonstrated comprehensive foundational proficiency in computer applications, IT tools, programming
+                logic, and computational fundamentals.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- EDUCATION SECTION -->
+    <section id="education" class="section education-section">
+      <div class="container">
+
+        <div class="section-header" data-reveal="fade-up">
+          <span class="section-badge">Academic Background</span>
+          <h2 class="section-title">Education</h2>
+          <p class="section-subtitle">Consistent academic foundation in engineering sciences, mathematics, and computer
+            applications.</p>
+        </div>
+
+        <div class="education-grid">
+
+          <!-- B.Tech -->
+          <div class="edu-card glass-panel" data-reveal="fade-up">
+            <div class="edu-card-header">
+              <div class="edu-icon">🎓</div>
+              <div>
+                <span class="edu-status-badge in-progress">Currently Pursuing</span>
+                <h3 class="edu-degree">Bachelor of Technology (B.Tech) — ECE</h3>
+                <p class="edu-institute">Lloyd Institute of Engineering and Technology</p>
+                <p class="edu-location">Greater Noida, UP, India</p>
+              </div>
+            </div>
+            <div class="edu-details">
+              <p>Electronics &amp; Communication Engineering (ECE) with focused coursework and practical development in
+                computer science, software engineering, embedded IoT systems, and AI applications.</p>
+            </div>
+          </div>
+
+          <!-- Class XII -->
+          <div class="edu-card glass-panel" data-reveal="fade-up" data-reveal-delay="100">
+            <div class="edu-card-header">
+              <div class="edu-icon">🏫</div>
+              <div>
+                <span class="edu-score-badge">63.2%</span>
+                <h3 class="edu-degree">Class XII (Non-Medical)</h3>
+                <p class="edu-institute">Senior Secondary Board</p>
+                <p class="edu-location">Science Stream</p>
+              </div>
+            </div>
+            <div class="edu-details">
+              <p>Core subjects in Physics, Chemistry, and Mathematics building strong analytical and quantitative
+                foundations.</p>
+            </div>
+          </div>
+
+          <!-- Class X -->
+          <div class="edu-card glass-panel" data-reveal="fade-up" data-reveal-delay="200">
+            <div class="edu-card-header">
+              <div class="edu-icon">📚</div>
+              <div>
+                <span class="edu-score-badge">72.6%</span>
+                <h3 class="edu-degree">Class X</h3>
+                <p class="edu-institute">Secondary School Board</p>
+                <p class="edu-location">High School</p>
+              </div>
+            </div>
+            <div class="edu-details">
+              <p>Strong performance across mathematics, science, and computer literacy with high discipline and academic
+                curiosity.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- CONTACT & CONNECT SECTION -->
+    <section id="contact" class="section contact-section">
+      <div class="container">
+
+        <div class="section-header" data-reveal="fade-up">
+          <span class="section-badge">Get In Touch</span>
+          <h2 class="section-title">Let's Connect &amp; Collaborate</h2>
+          <p class="section-subtitle">Interested in working together on software projects, internships, or hackathons?
+            Reach out directly!</p>
+        </div>
+
+        <div class="contact-grid">
+
+          <!-- Contact Info Cards -->
+          <div class="contact-info-col" data-reveal="fade-right">
+
+            <div class="contact-card glass-panel">
+              <div class="contact-card-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect width="20" height="16" x="2" y="4" rx="2" />
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                </svg>
+              </div>
+              <div class="contact-card-body">
+                <span class="contact-label">Email Directly</span>
+                <a href="mailto:absmadd@gmail.com" class="contact-value link-hover">absmadd@gmail.com</a>
+              </div>
+              <button class="copy-icon-btn copyable-chip" data-copy="absmadd@gmail.com" title="Copy email address"
+                aria-label="Copy email">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                  <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                </svg>
+              </button>
+            </div>
+
+            <div class="contact-card glass-panel">
+              <div class="contact-card-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+              </div>
+              <div class="contact-card-body">
+                <span class="contact-label">Phone &amp; WhatsApp</span>
+                <a href="tel:+918881179002" class="contact-value link-hover">+91 8881179002</a>
+              </div>
+              <button class="copy-icon-btn copyable-chip" data-copy="+918881179002" title="Copy phone number"
+                aria-label="Copy phone">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                  <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                </svg>
+              </button>
+            </div>
+
+            <div class="contact-card glass-panel">
+              <div class="contact-card-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+              </div>
+              <div class="contact-card-body">
+                <span class="contact-label">Location</span>
+                <span class="contact-value">Greater Noida, Uttar Pradesh, India</span>
+              </div>
+            </div>
+
+            <div class="social-channels-card glass-panel">
+              <span class="contact-label">Connect on Networks</span>
+              <div class="social-btn-row">
+                <a href="https://github.com/abhinashmadd" target="_blank" rel="noopener noreferrer"
+                  class="btn btn-outline btn-sm">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                      d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+                    <path d="M9 18c-4.51 2-5-2-7-2" />
+                  </svg>
+                  <span>github.com/abhinashmadd</span>
+                </a>
+                <a href="https://linkedin.com/in/abhinash-Maddeshiya" target="_blank" rel="noopener noreferrer"
+                  class="btn btn-outline btn-sm">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                    <rect width="4" height="12" x="2" y="9" />
+                    <circle cx="4" cy="4" r="2" />
+                  </svg>
+                  <span>linkedin.com/in/abhinash-Maddeshiya</span>
+                </a>
+                <a href="https://www.instagram.com/abs_335011?stkn=bnkzaHZqNnZ6NnN3" target="_blank"
+                  rel="noopener noreferrer" class="btn btn-outline btn-sm">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                  </svg>
+                  <span>instagram.com/abs_335011</span>
+                </a>
+                <a href="https://www.facebook.com/share/1FL9JxhygY/" target="_blank" rel="noopener noreferrer"
+                  class="btn btn-outline btn-sm">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                  </svg>
+                  <span>facebook.com/share/1FL9JxhygY</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Interactive Contact Form -->
+          <div class="contact-form-col" data-reveal="fade-left">
+            <form id="contactForm" class="contact-form glass-panel" novalidate>
+              <h3 class="form-title">Send a Direct Message</h3>
+              <p class="form-subtitle">Have an internship offer, project collaboration, or question? Send a note
+                directly to my inbox.</p>
+
+              <div class="form-group">
+                <label for="nameInput">Your Full Name <span class="required">*</span></label>
+                <input type="text" id="nameInput" name="name" class="form-control" placeholder="e.g. Priyanshu Sharma"
+                  required>
+                <span class="field-error" id="nameError"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="emailInput">Your Email Address <span class="required">*</span></label>
+                <input type="email" id="emailInput" name="email" class="form-control" placeholder="you@company.com"
+                  required>
+                <span class="field-error" id="emailError"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="subjectInput">Subject <span class="required">*</span></label>
+                <input type="text" id="subjectInput" name="subject" class="form-control"
+                  placeholder="e.g. Software Internship Opportunity / Project Collaboration" required>
+                <span class="field-error" id="subjectError"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="messageInput">Your Message <span class="required">*</span></label>
+                <textarea id="messageInput" name="message" rows="5" class="form-control"
+                  placeholder="Tell me about the project, timeline, or requirements..." required></textarea>
+                <span class="field-error" id="messageError"></span>
+              </div>
+
+              <button type="submit" id="submitBtn" class="btn btn-primary btn-block">
+                <span class="btn-text">Send Message</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="22" y1="2" x2="11" y2="13" />
+                  <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                </svg>
+              </button>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="logo-symbol">&lt;AM/&gt;</span>
+          <span class="logo-text">Abhinash Maddeshiya</span>
+          <p class="footer-bio">B.Tech (ECE) Student &amp; Developer passionate about creating intuitive software, AI
+            automation, and connected systems.</p>
+        </div>
+        <div class="footer-nav">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#achievements">Achievements</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="admin.html" style="color: var(--accent-cyan);">Admin Portal 🔒</a></li>
+          </ul>
+        </div>
+        <div class="footer-social">
+          <h4>Profiles</h4>
+          <ul>
+            <li><a href="https://github.com/abhinashmadd" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            <li><a href="https://linkedin.com/in/abhinash-Maddeshiya" target="_blank"
+                rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="https://www.instagram.com/abs_335011?stkn=bnkzaHZqNnZ6NnN3" target="_blank"
+                rel="noopener noreferrer">Instagram</a></li>
+            <li><a href="https://www.facebook.com/share/1FL9JxhygY/" target="_blank"
+                rel="noopener noreferrer">Facebook</a></li>
+            <li><a href="mailto:absmadd@gmail.com">absmadd@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Abhinash Maddeshiya. All rights reserved.</p>
+        <p class="footer-declaration">I hereby declare that the information provided is true and correct to the best of
+          my knowledge.</p>
+        <div style="margin-top: 6px;">
+          <a href="admin.html"
+            style="font-size: 0.8rem; color: var(--text-muted); display: inline-flex; align-items: center; gap: 4px;"
+            title="Owner Dashboard">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+            <span>Admin Inquiries Console</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BACK TO TOP BUTTON -->
+  <button id="backToTopBtn" class="back-to-top-btn" aria-label="Back to top" title="Scroll to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="m18 15-6-6-6 6" />
+    </svg>
+  </button>
+
+  <!-- PROJECT DETAILS MODAL -->
+  <div id="projectModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modalTitle">
+    <div class="modal-backdrop"></div>
+    <div class="modal-card glass-panel">
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal">&times;</button>
+      <div class="modal-body" id="modalBody">
+        <!-- Dynamically injected via script.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- RESUME MODAL / PRINT PREVIEW -->
+  <div id="resumeModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="resumeModalTitle">
+    <div class="modal-backdrop"></div>
+    <div class="modal-card resume-modal-card glass-panel">
+      <div class="resume-modal-header">
+        <h3 id="resumeModalTitle">Resume Preview</h3>
+        <div class="resume-actions">
+          <a href="assets/Abhinash_Maddeshiya_Resume.pdf" download="Abhinash_Maddeshiya_Resume.pdf"
+            class="btn btn-primary btn-sm" id="downloadResumeModalBtn" title="Download original PDF resume">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            <span>Download PDF</span>
+          </a>
+          <button id="printResumeBtn" class="btn btn-secondary btn-sm">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 6 2 18 2 18 9" />
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+              <rect width="12" height="8" x="6" y="14" />
+            </svg>
+            <span>Print / Save PDF</span>
+          </button>
+          <button class="modal-close-btn" id="resumeCloseBtn" aria-label="Close resume preview">&times;</button>
+        </div>
+      </div>
+      <div class="resume-sheet" id="printableResume">
+        <header class="resume-header">
+          <h2>ABHINASH Maddeshiya</h2>
+          <p class="resume-subtitle">B.Tech Student (ECE) | Software &amp; Web Development | IoT | AI-Powered
+            Applications</p>
+          <div class="resume-contact-bar">
+            <span>📍 Greater Noida, UP, India</span>
+            <span>✉️ absmadd@gmail.com</span>
+            <span>📱 +91 8881179002</span>
+            <span>🔗 linkedin.com/in/abhinash-Maddeshiya</span>
+            <span>💻 github.com/abhinashmadd</span>
+            <span>📸 instagram.com/abs_335011</span>
+            <span>🌐 facebook.com/share/1FL9JxhygY</span>
+          </div>
+        </header>
+
+        <section class="resume-sec">
+          <h4 class="resume-sec-title">PROFESSIONAL SUMMARY</h4>
+          <p>B.Tech (ECE) student with hands-on exposure to Python, C, JavaScript, web development, IoT, and AI
+            concepts. Interested in building practical technology solutions, participating in hackathons, and developing
+            software systems that solve real-world problems.</p>
+        </section>
+
+        <section class="resume-sec">
+          <h4 class="resume-sec-title">EDUCATION</h4>
+          <table class="resume-table">
+            <thead>
+              <tr>
+                <th>Institute / Qualification</th>
+                <th>Degree / Examination</th>
+                <th>Percentage / Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Lloyd Institute of Engineering and Technology, Greater Noida</td>
+                <td>B.Tech (ECE)</td>
+                <td>Currently Pursuing</td>
+              </tr>
+              <tr>
+                <td>Class XII (Non-Medical)</td>
+                <td>12th Grade</td>
+                <td>63.2%</td>
+              </tr>
+              <tr>
+                <td>Class X</td>
+                <td>10th Grade</td>
+                <td>72.6%</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="resume-sec">
+          <h4 class="resume-sec-title">TECHNICAL SKILLS</h4>
+          <div class="resume-skills-grid">
+            <div><strong>Programming Languages:</strong> C, Python, JavaScript</div>
+            <div><strong>Web Technologies:</strong> HTML5, CSS3</div>
+            <div><strong>Backend &amp; Database:</strong> Node.js, MySQL</div>
+            <div><strong>Libraries:</strong> NumPy, Pandas</div>
+            <div><strong>Version Control:</strong> Git, GitHub</div>
+            <div><strong>IoT:</strong> IoT Technologies</div>
+          </div>
+        </section>
+
+        <section class="resume-sec">
+          <h4 class="resume-sec-title">PROJECTS</h4>
+          <div class="resume-project-item">
+            <div class="resume-item-top">
+              <strong>AI Chartered Accountants Automation System</strong>
+              <span class="resume-tag">Hackathon Finalist</span>
+            </div>
+            <ul>
+              <li>Worked on an AI-powered automation system designed to simplify and streamline common Chartered
+                Accountant workflows.</li>
+              <li>Contributed to a technology-focused solution for automating repetitive accounting-related tasks.</li>
+              <li>Project reached the final listing / finalist stage of a hackathon.</li>
+            </ul>
+          </div>
+
+          <div class="resume-project-item">
+            <div class="resume-item-top">
+              <strong>Kissan Valley | Online Agricultural Marketplace</strong>
+            </div>
+            <ul>
+              <li>Developed a web-based marketplace concept enabling farmers to list and sell crops at competitive
+                prices.</li>
+              <li>Designed a simple process for connecting farmers with buyers across different locations in India.</li>
+              <li>Included the concept of finding and purchasing suitable crops from nearby markets.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="resume-sec">
+          <h4 class="resume-sec-title">ACHIEVEMENTS &amp; CERTIFICATIONS</h4>
+          <ul>
+            <li><strong>O Level Certificate:</strong> Successfully completed the NIELIT O Level certification,
+              demonstrating foundational knowledge in computer applications and IT.</li>
+            <li><strong>Hackindia AI &amp; Web3 Builders Hackathon 2026:</strong> Participated as a team member; project
+              reached the final listing/finalist stage.</li>
+            <li><strong>FET 100 Workshop (IEEE EDS SBC, IIT Roorkee):</strong> Participated in the workshop on
+              field-effect transistor innovation and future intelligent hardware (Sept 9, 2026).</li>
+            <li><strong>Introduction to Artificial Intelligence (Simplilearn SkillUp):</strong> Successfully completed
+              the online course (Aug 23, 2026).</li>
+          </ul>
+        </section>
+
+        <section class="resume-sec">
+          <div class="resume-two-cols">
+            <div>
+              <h4 class="resume-sec-title">AREAS OF INTEREST</h4>
+              <p>Frontend Development, Backend Development, Web Development, IoT, AI-Powered Applications, Software
+                Development</p>
+            </div>
+            <div>
+              <h4 class="resume-sec-title">PERSONAL STRENGTHS</h4>
+              <p>Problem Solving &amp; Logical Thinking, Willingness to Learn New Technologies, Interest in Practical
+                Technology Solutions</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="resume-sec resume-declaration">
+          <h4 class="resume-sec-title">DECLARATION</h4>
+          <p>I hereby declare that the information provided above is true and correct to the best of my knowledge.</p>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
