@@ -240,6 +240,22 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // Dedicated Resume download & preview endpoints
+  if (pathname === '/download-resume' || pathname === '/resume.pdf' || pathname === '/resume') {
+    const resumePath = path.join(__dirname, 'assets', 'Abhinash_Maddheshiya_Resume.pdf');
+    if (fs.existsSync(resumePath)) {
+      const isDownload = pathname === '/download-resume';
+      res.writeHead(200, {
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': isDownload
+          ? 'attachment; filename="Abhinash_Maddheshiya_Resume.pdf"'
+          : 'inline; filename="Abhinash_Maddheshiya_Resume.pdf"'
+      });
+      fs.createReadStream(resumePath).pipe(res);
+      return;
+    }
+  }
+
   // ========================================================================
   // STATIC ASSET SERVING
   // ========================================================================
