@@ -279,10 +279,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================================================
-  // 8. RESUME MODAL, VIEW SWITCHER & DOWNLOAD HANDLERS
+  // 8. RESUME MODAL & DOWNLOAD HANDLERS
   // ==========================================================================
-  const openResumeModalBtn = document.getElementById('openResumeModalBtn');
-  const fullscreenResumeSectionBtn = document.getElementById('fullscreenResumeSectionBtn');
   const resumeModal = document.getElementById('resumeModal');
   const resumeCloseBtn = document.getElementById('resumeCloseBtn');
   const printResumeBtn = document.getElementById('printResumeBtn');
@@ -301,19 +299,18 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = '';
   }
 
-  if (openResumeModalBtn) {
-    openResumeModalBtn.addEventListener('click', (e) => {
+  // All buttons and links that open the Resume Modal
+  const resumeTriggers = document.querySelectorAll('.open-resume-trigger, #openResumeModalBtn');
+  resumeTriggers.forEach(trigger => {
+    trigger.addEventListener('click', (e) => {
       e.preventDefault();
+      if (mobileDrawer && mobileDrawer.classList.contains('open')) {
+        mobileDrawer.classList.remove('open');
+        if (mobileMenuBtn) mobileMenuBtn.setAttribute('aria-expanded', 'false');
+      }
       openResumeModal();
     });
-  }
-
-  if (fullscreenResumeSectionBtn) {
-    fullscreenResumeSectionBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      openResumeModal();
-    });
-  }
+  });
 
   if (resumeCloseBtn) {
     resumeCloseBtn.addEventListener('click', closeResumeModal);
@@ -331,32 +328,6 @@ document.addEventListener('DOMContentLoaded', () => {
       window.print();
     });
   });
-
-  // Resume Document vs PDF Viewer tab switcher
-  const tabDocView = document.getElementById('tabDocView');
-  const tabPdfView = document.getElementById('tabPdfView');
-  const resumeSheetContainer = document.getElementById('resumeSheetContainer');
-  const resumePdfContainer = document.getElementById('resumePdfContainer');
-
-  if (tabDocView && tabPdfView && resumeSheetContainer && resumePdfContainer) {
-    tabDocView.addEventListener('click', () => {
-      tabDocView.classList.add('active');
-      tabDocView.setAttribute('aria-selected', 'true');
-      tabPdfView.classList.remove('active');
-      tabPdfView.setAttribute('aria-selected', 'false');
-      resumeSheetContainer.style.display = 'block';
-      resumePdfContainer.style.display = 'none';
-    });
-
-    tabPdfView.addEventListener('click', () => {
-      tabPdfView.classList.add('active');
-      tabPdfView.setAttribute('aria-selected', 'true');
-      tabDocView.classList.remove('active');
-      tabDocView.setAttribute('aria-selected', 'false');
-      resumeSheetContainer.style.display = 'none';
-      resumePdfContainer.style.display = 'block';
-    });
-  }
 
   // Download Resume button feedback and fallback
   const downloadResumeLinks = document.querySelectorAll('.download-resume-link, [download*="Resume"]');

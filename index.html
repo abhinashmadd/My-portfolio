@@ -62,8 +62,8 @@
           <li><a href="#projects" class="nav-link">Projects</a></li>
           <li><a href="#achievements" class="nav-link">Achievements</a></li>
           <li><a href="#education" class="nav-link">Education</a></li>
-          <li><a href="#resume" class="nav-link">Resume</a></li>
           <li><a href="#contact" class="nav-link">Contact</a></li>
+          <li><button type="button" class="btn btn-outline btn-sm open-resume-trigger" style="margin-left: 6px; padding: 6px 14px;">Resume</button></li>
         </ul>
       </nav>
 
@@ -109,8 +109,8 @@
         <li><a href="#projects" class="mobile-nav-link">Projects</a></li>
         <li><a href="#achievements" class="mobile-nav-link">Achievements</a></li>
         <li><a href="#education" class="mobile-nav-link">Education</a></li>
-        <li><a href="#resume" class="mobile-nav-link">Resume</a></li>
         <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+        <li><a href="javascript:void(0)" class="mobile-nav-link open-resume-trigger">View Resume 📄</a></li>
         <li class="mobile-drawer-cta">
           <a href="#contact" class="btn btn-primary btn-block">Get In Touch</a>
         </li>
@@ -180,7 +180,7 @@
                 <path d="m6 9 6 6 6-6" />
               </svg>
             </a>
-            <a href="#resume" class="btn btn-secondary">
+            <button id="openResumeModalBtn" class="btn btn-secondary open-resume-trigger" title="Open full resume">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                 <polyline points="14 2 14 8 20 8" />
@@ -189,7 +189,7 @@
                 <polyline points="10 9 9 9 8 9" />
               </svg>
               <span>View Resume</span>
-            </a>
+            </button>
             <a href="assets/Abhinash_Maddheshiya_Resume.pdf" download="Abhinash_Maddheshiya_Resume.pdf"
               class="btn btn-secondary download-resume-link" id="heroDownloadResumeBtn" title="Download official PDF resume">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -917,242 +917,6 @@
     </section>
 
 
-    <!-- RESUME & CREDENTIALS SECTION -->
-    <section id="resume" class="section resume-section">
-      <div class="container">
-
-        <div class="section-header" data-reveal="fade-up">
-          <span class="section-badge">Curriculum Vitae</span>
-          <h2 class="section-title">Resume &amp; Credentials</h2>
-          <p class="section-subtitle">A verified overview of my academic foundation, software development proficiencies, hackathon projects, and certifications. Download the official PDF or browse the interactive document below.</p>
-        </div>
-
-        <div class="resume-wrapper glass-panel" data-reveal="fade-up">
-          <!-- Control Toolbar -->
-          <div class="resume-toolbar">
-            <div class="resume-toolbar-left">
-              <div class="resume-file-info">
-                <div class="pdf-icon-badge">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                    <polyline points="14 2 14 8 20 8" />
-                    <line x1="16" y1="13" x2="8" y2="13" />
-                    <line x1="16" y1="17" x2="8" y2="17" />
-                    <polyline points="10 9 9 9 8 9" />
-                  </svg>
-                </div>
-                <div class="file-text-meta">
-                  <span class="file-title">Abhinash_Maddheshiya_Resume.pdf</span>
-                  <span class="file-submeta">165 KB • Verified • 1 Page</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="resume-toolbar-right">
-              <!-- View Switcher Tabs -->
-              <div class="resume-view-switcher" role="tablist" aria-label="Resume Display Mode">
-                <button type="button" class="resume-tab-btn active" id="tabDocView" role="tab" aria-selected="true" aria-controls="resumeSheetContainer">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-                  </svg>
-                  <span>Interactive Sheet</span>
-                </button>
-                <button type="button" class="resume-tab-btn" id="tabPdfView" role="tab" aria-selected="false" aria-controls="resumePdfContainer">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                    <line x1="3" y1="9" x2="21" y2="9" />
-                    <line x1="9" y1="21" x2="9" y2="9" />
-                  </svg>
-                  <span>PDF Viewer</span>
-                </button>
-              </div>
-
-              <!-- Action Buttons -->
-              <div class="resume-toolbar-actions">
-                <a href="assets/Abhinash_Maddheshiya_Resume.pdf" download="Abhinash_Maddheshiya_Resume.pdf"
-                  class="btn btn-primary btn-sm download-resume-link" id="sectionDownloadResumeBtn" title="Download official PDF resume">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                  </svg>
-                  <span>Download PDF</span>
-                </a>
-
-                <a href="assets/Abhinash_Maddheshiya_Resume.pdf" target="_blank" rel="noopener noreferrer"
-                  class="btn btn-secondary btn-sm" title="Open PDF in a new tab">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                    <polyline points="15 3 21 3 21 9" />
-                    <line x1="10" y1="14" x2="21" y2="3" />
-                  </svg>
-                  <span>Open Tab</span>
-                </a>
-
-                <button type="button" class="btn btn-secondary btn-sm print-resume-trigger" title="Print resume or save as PDF">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="6 9 6 2 18 2 18 9" />
-                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
-                    <rect width="12" height="8" x="6" y="14" />
-                  </svg>
-                  <span>Print</span>
-                </button>
-
-                <button type="button" class="btn btn-secondary btn-sm" id="fullscreenResumeSectionBtn" title="View in fullscreen modal">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="15 3 21 3 21 9" />
-                    <polyline points="9 21 3 21 3 15" />
-                    <line x1="21" y1="3" x2="14" y2="10" />
-                    <line x1="3" y1="21" x2="10" y2="14" />
-                  </svg>
-                  <span>Fullscreen</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Document View (A4 Paper Card) -->
-          <div id="resumeSheetContainer" class="resume-display-panel active">
-            <div class="resume-sheet">
-              <header class="resume-header">
-                <h2>ABHINASH MADDHESHIYA</h2>
-                <p class="resume-subtitle">B.Tech Student | Software &amp; Web Development | IoT | AI-Powered Applications</p>
-                <div class="resume-contact-bar">
-                  <span>📍 Greater Noida, UP, India</span>
-                  <span>✉️ <a href="mailto:absmadd@gmail.com">absmadd@gmail.com</a></span>
-                  <span>📱 <a href="tel:+918881179002">+91 8881179002</a></span>
-                  <span>🔗 <a href="https://linkedin.com/in/abhinash-maddheshiya" target="_blank" rel="noopener noreferrer">linkedin.com/in/abhinash-maddheshiya</a></span>
-                  <span>💻 <a href="https://github.com/abhinashmadd" target="_blank" rel="noopener noreferrer">github.com/abhinashmadd</a></span>
-                </div>
-              </header>
-
-              <section class="resume-sec">
-                <h4 class="resume-sec-title">PROFESSIONAL SUMMARY</h4>
-                <p>B.Tech student with hands-on exposure to Python, C, JavaScript, web development, IoT, and AI concepts. Interested in building practical technology solutions, participating in hackathons, and developing software systems that solve real-world problems.</p>
-              </section>
-
-              <section class="resume-sec">
-                <h4 class="resume-sec-title">EDUCATION</h4>
-                <div class="table-responsive">
-                  <table class="resume-table">
-                    <thead>
-                      <tr>
-                        <th>Institute / Qualification</th>
-                        <th>Degree / Examination</th>
-                        <th>Percentage / Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td><strong>Lloyd Institute of Engineering and Technology, Greater Noida</strong></td>
-                        <td>B.Tech</td>
-                        <td><span class="status-pill current">Currently Pursuing</span></td>
-                      </tr>
-                      <tr>
-                        <td><strong>Class XII (Non-Medical)</strong></td>
-                        <td>12th Grade</td>
-                        <td>63.2%</td>
-                      </tr>
-                      <tr>
-                        <td><strong>Class X</strong></td>
-                        <td>10th Grade</td>
-                        <td>72.6%</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </section>
-
-              <section class="resume-sec">
-                <h4 class="resume-sec-title">TECHNICAL SKILLS</h4>
-                <div class="resume-skills-grid">
-                  <div><strong>Programming Languages:</strong> C, Python, JavaScript</div>
-                  <div><strong>Web Technologies:</strong> HTML5, CSS3</div>
-                  <div><strong>Backend &amp; Database:</strong> Node.js, MySQL</div>
-                  <div><strong>Libraries:</strong> NumPy, Pandas</div>
-                  <div><strong>Version Control:</strong> Git, GitHub</div>
-                  <div><strong>IoT:</strong> IoT Technologies</div>
-                </div>
-              </section>
-
-              <section class="resume-sec">
-                <h4 class="resume-sec-title">PROJECTS</h4>
-                <div class="resume-project-item">
-                  <div class="resume-item-top">
-                    <strong>AI Chartered Accountants Automation System</strong>
-                    <span class="resume-tag">Hackathon Finalist</span>
-                  </div>
-                  <ul>
-                    <li>Worked on an AI-powered automation system designed to simplify and streamline common Chartered Accountant workflows.</li>
-                    <li>Contributed to a technology-focused solution for automating repetitive accounting-related tasks.</li>
-                    <li>Project reached the final listing / finalist stage of a hackathon.</li>
-                  </ul>
-                </div>
-
-                <div class="resume-project-item">
-                  <div class="resume-item-top">
-                    <strong>Kissan Valley | Online Agricultural Marketplace</strong>
-                  </div>
-                  <ul>
-                    <li>Developed a web-based marketplace concept enabling farmers to list and sell crops at competitive prices.</li>
-                    <li>Designed a simple process for connecting farmers with buyers across different locations in India.</li>
-                    <li>Included the concept of finding and purchasing suitable crops from nearby markets.</li>
-                  </ul>
-                </div>
-              </section>
-
-              <section class="resume-sec">
-                <h4 class="resume-sec-title">ACHIEVEMENTS &amp; CERTIFICATIONS</h4>
-                <ul>
-                  <li><strong>O Level Certificate:</strong> Successfully completed the NIELIT O Level certification, demonstrating foundational knowledge in computer applications and IT.</li>
-                  <li><strong>Hackindia AI &amp; Web3 Builders Hackathon 2026:</strong> Participated as a team member; project reached the final listing/finalist stage.</li>
-                  <li><strong>FET 100 Workshop (IEEE EDS SBC, IIT Roorkee):</strong> Participated in the workshop on field-effect transistor innovation and future intelligent hardware (Sept 9, 2026).</li>
-                  <li><strong>Introduction to Artificial Intelligence (Simplilearn SkillUp):</strong> Successfully completed the online course (Aug 23, 2026).</li>
-                </ul>
-              </section>
-
-              <section class="resume-sec">
-                <div class="resume-two-cols">
-                  <div>
-                    <h4 class="resume-sec-title">AREAS OF INTEREST</h4>
-                    <p>Frontend Development, Backend Development, Web Development, IoT, AI-Powered Applications, Software Development</p>
-                  </div>
-                  <div>
-                    <h4 class="resume-sec-title">PERSONAL STRENGTHS</h4>
-                    <p>Problem Solving &amp; Logical Thinking, Willingness to Learn New Technologies, Interest in Practical Technology Solutions</p>
-                  </div>
-                </div>
-              </section>
-
-              <section class="resume-sec resume-declaration">
-                <h4 class="resume-sec-title">DECLARATION</h4>
-                <p>I hereby declare that the information provided above is true and correct to the best of my knowledge.</p>
-              </section>
-
-              <div class="resume-footer-tag">
-                <span>Abhinash Maddheshiya — Resume</span>
-                <span>Page 1 of 1</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Embedded PDF Viewer Panel -->
-          <div id="resumePdfContainer" class="resume-display-panel" style="display: none;">
-            <div class="resume-pdf-frame-wrapper">
-              <iframe id="resumePdfIframe" src="assets/Abhinash_Maddheshiya_Resume.pdf#toolbar=1&navpanes=0&scrollbar=1" title="Abhinash Maddheshiya Official PDF Resume"></iframe>
-              <div class="pdf-fallback-note">
-                <p>If the PDF does not render directly in your browser, you can <a href="assets/Abhinash_Maddheshiya_Resume.pdf" download="Abhinash_Maddheshiya_Resume.pdf" class="download-resume-link">click here to download the PDF</a> or <a href="assets/Abhinash_Maddheshiya_Resume.pdf" target="_blank" rel="noopener noreferrer">open it in a new window</a>.</p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-
     <!-- CONTACT & CONNECT SECTION -->
     <section id="contact" class="section contact-section">
       <div class="container">
@@ -1334,7 +1098,7 @@
             <li><a href="#projects">Projects</a></li>
             <li><a href="#achievements">Achievements</a></li>
             <li><a href="#education">Education</a></li>
-            <li><a href="#resume">Resume</a></li>
+            <li><a href="javascript:void(0)" class="open-resume-trigger">Resume</a></li>
             <li><a href="#contact">Contact</a></li>
             <li><a href="admin.html" style="color: var(--accent-cyan);">Admin Portal 🔒</a></li>
           </ul>
@@ -1407,13 +1171,22 @@
             </svg>
             <span>Download PDF</span>
           </a>
-          <button id="printResumeBtn" class="btn btn-secondary btn-sm print-resume-trigger">
+          <a href="assets/Abhinash_Maddheshiya_Resume.pdf" target="_blank" rel="noopener noreferrer"
+            class="btn btn-secondary btn-sm" title="Open PDF in new tab">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+              <polyline points="15 3 21 3 21 9" />
+              <line x1="10" y1="14" x2="21" y2="3" />
+            </svg>
+            <span>Open PDF</span>
+          </a>
+          <button id="printResumeBtn" class="btn btn-secondary btn-sm print-resume-trigger" title="Print resume or save as PDF">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="6 9 6 2 18 2 18 9" />
               <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
               <rect width="12" height="8" x="6" y="14" />
             </svg>
-            <span>Print / Save PDF</span>
+            <span>Print</span>
           </button>
           <button class="modal-close-btn" id="resumeCloseBtn" aria-label="Close resume preview">&times;</button>
         </div>
