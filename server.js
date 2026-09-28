@@ -233,11 +233,35 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // Redirect /admin to /admin.html
-  if (pathname === '/admin') {
-    res.writeHead(302, { 'Location': '/admin.html' });
+  // ------------------------------------------------------------------------
+  // PAGE ROUTING (/admin, /index, /)
+  // ------------------------------------------------------------------------
+
+  // Redirect /admin/ trailing slash to /admin to ensure relative assets load properly
+  if (pathname === '/admin/' && method === 'GET') {
+    res.writeHead(301, { 'Location': '/admin' });
     res.end();
     return;
+  }
+
+  // Route /admin or /admin.html to serve the Admin Page
+  if ((pathname === '/admin' || pathname === '/admin.html') && method === 'GET') {
+    const adminPath = path.join(__dirname, 'admin.html');
+    if (fs.existsSync(adminPath)) {
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      fs.createReadStream(adminPath).pipe(res);
+      return;
+    }
+  }
+
+  // Route / or /index or /index.html to serve the Portfolio Home Page
+  if ((pathname === '/' || pathname === '/index' || pathname === '/index.html') && method === 'GET') {
+    const indexPath = path.join(__dirname, 'index.html');
+    if (fs.existsSync(indexPath)) {
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      fs.createReadStream(indexPath).pipe(res);
+      return;
+    }
   }
 
   // Dedicated Resume download & preview endpoints
@@ -259,7 +283,12 @@ const server = http.createServer(async (req, res) => {
   // ========================================================================
   // STATIC ASSET SERVING
   // ========================================================================
-  let safePath = pathname === '/' ? '/index.html' : pathname;
+  let safePath = pathname;
+  if (pathname === '/' || pathname === '/index') {
+    safePath = '/index.html';
+  } else if (pathname === '/admin') {
+    safePath = '/admin.html';
+  }
   // Decode URL components
   safePath = decodeURIComponent(safePath);
   
@@ -300,7 +329,7 @@ const server = http.createServer(async (req, res) => {
 server.listen(PORT, () => {
   console.log(`=======================================================`);
   console.log(`🚀 Portfolio Server running at http://localhost:${PORT}`);
-  console.log(`🔒 Admin Dashboard running at http://localhost:${PORT}/admin.html`);
+  console.log(`🔒 Admin Dashboard running at http://localhost:${PORT}/admin`);
   console.log(`✉️  Contact Inquiries routed to absmadd@gmail.com & stored in data/messages.json`);
   console.log(`🔑 Admin Passcode: ${ADMIN_PASSWORD}`);
   console.log(`=======================================================`);
