@@ -69,10 +69,52 @@ document.addEventListener('DOMContentLoaded', () => {
     dashboardApp.style.display = 'none';
   }
 
+  function updateDbStatusUI() {
+    const dbStatusText = document.getElementById('dbStatusText');
+    const dbStatusHeading = document.getElementById('dbStatusHeading');
+    const dbStatusDesc = document.getElementById('dbStatusDesc');
+    const dbStatusBadge = document.getElementById('dbStatusBadge');
+
+    if (!dbStatusText) return;
+
+    if (window.PortfolioDB && window.PortfolioDB.isReady()) {
+      dbStatusText.textContent = 'Cloud Firestore Connected';
+      dbStatusHeading.textContent = 'Firebase Cloud Database Active';
+      dbStatusDesc.textContent = 'Live centralized sync enabled: All visitor messages from any device across the internet appear here in real time.';
+      if (dbStatusBadge) {
+        dbStatusBadge.style.borderColor = 'rgba(0, 240, 255, 0.4)';
+        dbStatusBadge.style.color = 'var(--accent-primary)';
+      }
+    } else {
+      dbStatusText.textContent = 'Local Mode (Cloud DB Setup Available)';
+      dbStatusHeading.textContent = 'Cloud Database Setup';
+      dbStatusDesc.innerHTML = 'To receive live messages from viewers on other devices without a backend, open <code>firebase-config.js</code> and paste your free Firebase project credentials.';
+      if (dbStatusBadge) {
+        dbStatusBadge.style.borderColor = 'rgba(245, 158, 11, 0.4)';
+        dbStatusBadge.style.color = '#f59e0b';
+      }
+    }
+  }
+
+  let dbUnsubscribe = null;
+
   function showDashboard() {
     loginScreen.style.display = 'none';
     dashboardApp.style.display = 'block';
+    updateDbStatusUI();
     fetchMessages();
+
+    // Set up realtime Firestore subscription if available
+    if (window.PortfolioDB && window.PortfolioDB.isReady() && !dbUnsubscribe) {
+      dbUnsubscribe = window.PortfolioDB.subscribeToMessages((cloudMessages) => {
+        if (cloudMessages && cloudMessages.length > 0) {
+          console.log('[PortfolioDB] Realtime messages update received:', cloudMessages.length);
+          messages = cloudMessages;
+          localStorage.setItem('am_portfolio_messages', JSON.stringify(messages));
+          renderAll();
+        }
+      });
+    }
   }
 
   if (loginForm) {
@@ -112,6 +154,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
+      if (dbUnsubscribe) {
+        try { dbUnsubscribe(); } catch (e) {}
+        dbUnsubscribe = null;
+      }
       sessionStorage.removeItem('am_admin_session');
       showToast('Logged out of Admin Portal', 'info');
       showLogin();
@@ -122,24 +168,42 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2. DATA FETCHING & SYNCHRONIZATION
   // ========================================================================
   async function fetchMessages() {
+    // 1. Try Firebase Cloud Firestore first (Centralized DB for all visitors)
+    if (window.PortfolioDB && window.PortfolioDB.isReady()) {
+      try {
+        const cloudMessages = await window.PortfolioDB.getMessages();
+        if (cloudMessages) {
+          messages = cloudMessages;
+          localStorage.setItem('am_portfolio_messages', JSON.stringify(messages));
+          renderAll();
+          return;
+        }
+      } catch (cloudErr) {
+        console.warn('Error fetching from Cloud Firestore:', cloudErr);
+      }
+    }
+
+    // 2. Fallback to Local Node Server API (if server.js is running)
     try {
       const res = await fetch('/api/messages');
       if (res.ok) {
         const data = await res.json();
         messages = data.messages || [];
         localStorage.setItem('am_portfolio_messages', JSON.stringify(messages));
-      } else {
-        throw new Error('API unavailable');
+        renderAll();
+        return;
       }
-    } catch (err) {
-      // Fallback: read from localStorage
-      const cached = localStorage.getItem('am_portfolio_messages');
-      if (cached) {
-        try {
-          messages = JSON.parse(cached);
-        } catch (e) {
-          messages = [];
-        }
+    } catch (apiErr) {
+      // Server not active
+    }
+
+    // 3. Fallback: read from localStorage
+    const cached = localStorage.getItem('am_portfolio_messages');
+    if (cached) {
+      try {
+        messages = JSON.parse(cached);
+      } catch (e) {
+        messages = [];
       }
     }
 
@@ -311,6 +375,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // 4. MESSAGE ACTIONS (STAR, READ, DELETE, PERSIST)
   // ========================================================================
   async function persistStatus(id, updates) {
+    // 1. Cloud Firestore
+    if (window.PortfolioDB && window.PortfolioDB.isReady()) {
+      try {
+        await window.PortfolioDB.updateMessageStatus(id, updates);
+      } catch (err) {
+        console.warn('Error updating status in Cloud DB:', err);
+      }
+    }
+
+    // 2. Local Node server API
     try {
       await fetch(`/api/messages/${id}`, {
         method: 'PATCH',
@@ -319,8 +393,9 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     } catch (e) {
       // Local fallback
-      localStorage.setItem('am_portfolio_messages', JSON.stringify(messages));
     }
+
+    localStorage.setItem('am_portfolio_messages', JSON.stringify(messages));
     updateMetrics();
   }
 
@@ -355,6 +430,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const confirmed = confirm('Are you sure you want to permanently delete this inquiry?');
       if (!confirmed) return;
 
+      // 1. Cloud Firestore
+      if (window.PortfolioDB && window.PortfolioDB.isReady()) {
+        try {
+          await window.PortfolioDB.deleteMessage(activeMessageId);
+        } catch (err) {
+          console.warn('Error deleting message from Cloud DB:', err);
+        }
+      }
+
+      // 2. Local Node server API
       try {
         await fetch(`/api/messages/${activeMessageId}`, { method: 'DELETE' });
       } catch (e) {
@@ -408,9 +493,23 @@ document.addEventListener('DOMContentLoaded', () => {
         name: sampleNames[randomIdx],
         email: `${sampleNames[randomIdx].toLowerCase().replace(' ', '.')}@example.com`,
         subject: `Technical Opportunity / Inquiry regarding ${sampleRoles[randomIdx]}`,
-        message: `Hello Abhinash, we reviewed your work on Kissan Valley and the AI CA Automation platform. We would love to discuss potential opportunities or project collaboration with you.`
+        message: `Hello Abhinash, we reviewed your work on Kissan Valley and the AI CA Automation platform. We would love to discuss potential opportunities or project collaboration with you.`,
+        timestamp: new Date().toISOString()
       };
 
+      let newId = 'msg_local_' + Date.now();
+
+      // 1. Save to Cloud Firestore if connected
+      if (window.PortfolioDB && window.PortfolioDB.isReady()) {
+        try {
+          const cloudSaved = await window.PortfolioDB.saveMessage(testMsg);
+          if (cloudSaved && cloudSaved.id) newId = cloudSaved.id;
+        } catch (err) {
+          console.warn('Cloud DB test msg error:', err);
+        }
+      }
+
+      // 2. Dispatch to local Node server API
       try {
         const res = await fetch('/api/contact', {
           method: 'POST',
@@ -418,24 +517,23 @@ document.addEventListener('DOMContentLoaded', () => {
           body: JSON.stringify(testMsg)
         });
         const data = await res.json();
-        showToast('New test inquiry received and stored!', 'success');
-        await fetchMessages();
-        selectMessage(data.id || messages[0].id);
+        if (data && data.id) newId = data.id;
       } catch (err) {
         // Fallback local
-        const newEntry = {
-          id: 'msg_local_' + Date.now(),
-          ...testMsg,
-          timestamp: new Date().toISOString(),
-          isRead: false,
-          isStarred: false
-        };
-        messages.unshift(newEntry);
-        localStorage.setItem('am_portfolio_messages', JSON.stringify(messages));
-        showToast('Test inquiry created in local storage', 'success');
-        renderAll();
-        selectMessage(newEntry.id);
       }
+
+      // 3. Local fallback persistence
+      const newEntry = {
+        id: newId,
+        ...testMsg,
+        isRead: false,
+        isStarred: false
+      };
+      messages.unshift(newEntry);
+      localStorage.setItem('am_portfolio_messages', JSON.stringify(messages));
+      showToast('New test inquiry received and stored!', 'success');
+      renderAll();
+      selectMessage(newId);
     });
   }
 

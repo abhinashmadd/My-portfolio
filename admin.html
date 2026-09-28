@@ -93,15 +93,23 @@
     <!-- Main Container -->
     <main class="container admin-main-content">
       
-      <!-- Static Hosting Notice -->
-      <div class="glass-panel" style="margin-bottom: 24px; padding: 16px; border-left: 4px solid var(--accent-primary); background-color: rgba(0, 240, 255, 0.05);">
-        <h4 style="margin-bottom: 8px; color: var(--accent-primary); display: flex; align-items: center; gap: 8px;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-          Important Note: Static Hosting Limitations
-        </h4>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0; line-height: 1.5;">
-          Because this portfolio is hosted on a static server (GitHub Pages) without a backend database, inquiries submitted by <strong>other people on their devices</strong> cannot be saved here centrally. They are instead forwarded securely to your email (<strong>absmadd@gmail.com</strong>). Only messages you submit on this current browser will appear in this dashboard demo.
-        </p>
+      <!-- Cloud Database Status Banner -->
+      <div id="dbStatusBanner" class="glass-panel" style="margin-bottom: 24px; padding: 16px; border-left: 4px solid var(--accent-primary); background-color: rgba(0, 240, 255, 0.05);">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h4 id="dbStatusTitle" style="margin: 0 0 6px; color: var(--accent-primary); display: flex; align-items: center; gap: 8px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              <span id="dbStatusHeading">Firebase Cloud Database Sync</span>
+            </h4>
+            <p id="dbStatusDesc" style="color: var(--text-muted); font-size: 0.9rem; margin: 0; line-height: 1.5;">
+              Centralized cloud synchronization: Inquiries submitted by viewers anywhere on any device are stored and synced in real-time.
+            </p>
+          </div>
+          <div id="dbStatusBadge" class="live-pill" style="font-size: 0.82rem;">
+            <span class="status-indicator"></span>
+            <span id="dbStatusText">Checking Cloud DB...</span>
+          </div>
+        </div>
       </div>
 
       <!-- Metrics Strip -->
@@ -237,6 +245,11 @@
     </main>
 
   </div>
+
+  <!-- Firebase Cloud Database SDKs (Compat version for pure static hosting) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
 
   <script src="admin.js"></script>
 </body>

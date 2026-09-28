@@ -422,7 +422,15 @@ document.addEventListener('DOMContentLoaded', () => {
         timestamp: new Date().toISOString()
       };
 
-      // 1. Save to local storage for instant dashboard synchronization
+      // 1. Save to Cloud Firestore Database (Persistent across all devices & static hosting)
+      let cloudDbPromise = Promise.resolve();
+      if (window.PortfolioDB && window.PortfolioDB.isReady()) {
+        cloudDbPromise = window.PortfolioDB.saveMessage(payload)
+          .then(res => console.log('Message persisted to Cloud Firestore:', res))
+          .catch(err => console.warn('Cloud Firestore save error:', err));
+      }
+
+      // 2. Save to local storage for instant dashboard synchronization
       try {
         const stored = JSON.parse(localStorage.getItem('am_portfolio_messages') || '[]');
         stored.unshift({
@@ -436,13 +444,14 @@ document.addEventListener('DOMContentLoaded', () => {
         console.warn('LocalStorage save error:', err);
       }
 
-      // 2. Dispatch simultaneously to Server API and Gmail Forwarder (FormSubmit)
+      // 3. Dispatch to Local Server API (if server.js is running)
       const serverPromise = fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       }).catch(err => console.log('Local server dispatch:', err));
 
+      // 4. Dispatch to Gmail Forwarder (FormSubmit)
       const emailForwardPromise = fetch('https://formsubmit.co/ajax/absmadd@gmail.com', {
         method: 'POST',
         headers: {
@@ -459,7 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
       }).catch(err => console.log('Email forwarding dispatch:', err));
 
-      Promise.allSettled([serverPromise, emailForwardPromise]).then(() => {
+      Promise.allSettled([cloudDbPromise, serverPromise, emailForwardPromise]).then(() => {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
         showToast('Thank you! Your message was sent to absmadd@gmail.com & stored in the database.', 'success');
