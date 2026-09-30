@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'ai-ca': {
       title: 'AI Chartered Accountants Automation System',
       badge: 'HackIndia 2026 Finalist',
-      image: 'assets/ai-accounting.jpg',
+      image: 'assets/ai-ca-dashboard.png?v=2',
       liveUrl: 'https://ai-ca-system.onrender.com',
       tags: ['Python', 'AI / ML', 'Workflow Automation', 'Financial Data Processing'],
       overview: 'An advanced AI-powered automation architecture designed to eliminate time-consuming, repetitive accounting calculations, reconciliation workflows, and compliance audits for practicing Chartered Accountants.',
