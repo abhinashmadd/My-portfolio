@@ -180,6 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: 'AI Chartered Accountants Automation System',
       badge: 'HackIndia 2026 Finalist',
       image: 'assets/ai-accounting.jpg',
+      liveUrl: 'https://ai-ca-system.onrender.com',
       tags: ['Python', 'AI / ML', 'Workflow Automation', 'Financial Data Processing'],
       overview: 'An advanced AI-powered automation architecture designed to eliminate time-consuming, repetitive accounting calculations, reconciliation workflows, and compliance audits for practicing Chartered Accountants.',
       problem: 'Chartered Accountants spend countless hours manually cross-referencing invoice statements, verifying tax deduction rates, matching ledger entries, and validating compliance data—leading to fatigue, potential compliance errors, and slow turnaround times.',
@@ -217,8 +218,22 @@ document.addEventListener('DOMContentLoaded', () => {
     modalBody.innerHTML = `
       <img src="${data.image}" alt="${data.title}" class="modal-project-img">
       <div class="modal-project-header">
-        <span class="section-badge">${data.badge}</span>
-        <h3 id="modalTitle">${data.title}</h3>
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; margin-bottom: 6px;">
+          <div>
+            <span class="section-badge">${data.badge}</span>
+            <h3 id="modalTitle" style="margin-top: 6px;">${data.title}</h3>
+          </div>
+          ${data.liveUrl ? `
+            <a href="${data.liveUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="margin-top: 4px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+              <span>Live Application ↗</span>
+            </a>
+          ` : ''}
+        </div>
         <div class="project-tags">
           ${data.tags.map(t => `<span class="tag">${t}</span>`).join('')}
         </div>
@@ -240,8 +255,18 @@ document.addEventListener('DOMContentLoaded', () => {
       <h4 class="modal-sec-heading">Project Impact</h4>
       <p class="about-text">${data.impact}</p>
 
-      <div style="margin-top: 24px; text-align: right;">
-        <button class="btn btn-secondary btn-sm" id="innerModalCloseBtn">Close</button>
+      <div style="margin-top: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-top: 1px solid var(--glass-border); padding-top: 20px;">
+        ${data.liveUrl ? `
+          <a href="${data.liveUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+            <span>Visit Live Application</span>
+          </a>
+        ` : '<div></div>'}
+        <button class="btn btn-secondary btn-sm" id="innerModalCloseBtn" style="margin-left: auto;">Close</button>
       </div>
     `;
 
