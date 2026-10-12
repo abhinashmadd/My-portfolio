@@ -32,7 +32,7 @@
   width: 56px;
   height: 56px;
   margin: 0 auto 20px;
-  border-radius: var(--radius-full);
+  border-radius: 12px;
   background: var(--gradient-brand-subtle);
   border: 1px solid var(--glass-border-hover);
   color: var(--accent-cyan);
@@ -173,10 +173,10 @@
   color: var(--accent-amber);
 }
 
-.icon-violet {
-  background: rgba(168, 85, 247, 0.15);
-  border: 1px solid rgba(168, 85, 247, 0.3);
-  color: var(--accent-violet);
+.icon-blue {
+  background: rgba(37, 99, 235, 0.15);
+  border: 1px solid rgba(37, 99, 235, 0.3);
+  color: #38bdf8;
 }
 
 .icon-emerald {
@@ -419,7 +419,7 @@
 .sender-avatar {
   width: 52px;
   height: 52px;
-  border-radius: var(--radius-full);
+  border-radius: 10px;
   background: var(--gradient-brand);
   color: #fff;
   display: flex;

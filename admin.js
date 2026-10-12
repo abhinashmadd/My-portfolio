@@ -53,20 +53,127 @@ document.addEventListener('DOMContentLoaded', () => {
   let searchQuery = '';
 
   // ========================================================================
-  // 1. AUTHENTICATION & SESSION MANAGEMENT
+  // 1. AUTHENTICATION, ROLES & SESSION MANAGEMENT
   // ========================================================================
-  function checkSession() {
-    const token = sessionStorage.getItem('am_admin_session');
-    if (token) {
-      showDashboard();
+  let selectedLoginRole = 'admin'; // 'admin' or 'recruiter'
+
+  // Role Tab Switching
+  const roleTabAdmin = document.getElementById('roleTabAdmin');
+  const roleTabRecruiter = document.getElementById('roleTabRecruiter');
+  const passcodeGroup = document.getElementById('passcodeGroup');
+  const passcodeLabel = document.getElementById('passcodeLabel');
+  const loginBtnText = document.getElementById('loginBtnText');
+
+  function updateRoleTabUI(role) {
+    selectedLoginRole = role;
+    if (role === 'admin') {
+      if (roleTabAdmin) {
+        roleTabAdmin.style.background = 'var(--accent-primary, #00f0ff)';
+        roleTabAdmin.style.color = '#0a0d14';
+      }
+      if (roleTabRecruiter) {
+        roleTabRecruiter.style.background = 'transparent';
+        roleTabRecruiter.style.color = 'var(--text-muted, #94a3b8)';
+      }
+      if (passcodeLabel) passcodeLabel.textContent = 'Admin Passcode';
+      if (adminPassInput) {
+        adminPassInput.placeholder = 'Enter admin passcode';
+        adminPassInput.required = true;
+      }
+      if (loginBtnText) loginBtnText.textContent = 'Access as Admin';
     } else {
-      showLogin();
+      if (roleTabRecruiter) {
+        roleTabRecruiter.style.background = '#10b981';
+        roleTabRecruiter.style.color = '#0a0d14';
+      }
+      if (roleTabAdmin) {
+        roleTabAdmin.style.background = 'transparent';
+        roleTabAdmin.style.color = 'var(--text-muted, #94a3b8)';
+      }
+      if (passcodeLabel) passcodeLabel.textContent = 'Recruiter Passcode (Optional: Press Access directly)';
+      if (adminPassInput) {
+        adminPassInput.placeholder = 'Press access or enter Recruiter2026';
+        adminPassInput.required = false;
+      }
+      if (loginBtnText) loginBtnText.textContent = 'Access as Recruiter (Review Mode)';
     }
+  }
+
+  if (roleTabAdmin) {
+    roleTabAdmin.addEventListener('click', () => updateRoleTabUI('admin'));
+  }
+  if (roleTabRecruiter) {
+    roleTabRecruiter.addEventListener('click', () => updateRoleTabUI('recruiter'));
+  }
+
+  async function checkSession() {
+    const token = sessionStorage.getItem('am_admin_session');
+    if (!token) {
+      showLogin();
+      return;
+    }
+
+    // Attempt token verification against server with credentials
+    try {
+      const res = await fetch('/api/admin/me', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'X-Session-Token': token
+        },
+        credentials: 'include'
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.roleMapping) {
+          sessionStorage.setItem('am_admin_role', data.roleMapping.role);
+          sessionStorage.setItem('am_admin_role_details', JSON.stringify(data.roleMapping));
+        }
+      }
+    } catch (e) {
+      // Offline fallback preserves existing session
+    }
+
+    showDashboard();
   }
 
   function showLogin() {
     loginScreen.style.display = 'flex';
     dashboardApp.style.display = 'none';
+  }
+
+  function updateRoleBadgeUI() {
+    const activeRoleText = document.getElementById('activeRoleText');
+    const activeRoleBadge = document.getElementById('activeRoleBadge');
+    const role = sessionStorage.getItem('am_admin_role') || 'admin';
+
+    if (!activeRoleText) return;
+
+    if (role === 'admin') {
+      activeRoleText.textContent = 'Admin · Full Access';
+      if (activeRoleBadge) {
+        activeRoleBadge.style.borderColor = 'rgba(0, 240, 255, 0.4)';
+        activeRoleBadge.style.color = 'var(--accent-primary, #00f0ff)';
+      }
+      if (detailDeleteBtn) {
+        detailDeleteBtn.style.opacity = '1';
+        detailDeleteBtn.removeAttribute('title');
+      }
+    } else if (role === 'recruiter') {
+      activeRoleText.textContent = 'Recruiter · Review Mode';
+      if (activeRoleBadge) {
+        activeRoleBadge.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+        activeRoleBadge.style.color = '#10b981';
+      }
+      if (detailDeleteBtn) {
+        detailDeleteBtn.title = 'Inquiry deletion is restricted to Lead Administrator';
+      }
+    } else {
+      activeRoleText.textContent = 'Guest · Demo Mode';
+      if (activeRoleBadge) {
+        activeRoleBadge.style.borderColor = 'rgba(245, 158, 11, 0.4)';
+        activeRoleBadge.style.color = '#f59e0b';
+      }
+    }
   }
 
   function updateDbStatusUI() {
@@ -101,6 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function showDashboard() {
     loginScreen.style.display = 'none';
     dashboardApp.style.display = 'block';
+    updateRoleBadgeUI();
     updateDbStatusUI();
     fetchMessages();
 
@@ -117,50 +225,304 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  let currentMfaTempToken = null;
+
   if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       loginError.textContent = '';
+      const mfaError = document.getElementById('mfaError');
+      if (mfaError) mfaError.textContent = '';
+
+      const mfaGroup = document.getElementById('mfaGroup');
+      const passcodeGroup = document.getElementById('passcodeGroup');
+      const mfaCodeInput = document.getElementById('mfaCodeInput');
+      const loginBtnText = document.getElementById('loginBtnText');
+
+      // Step 2: Handle TOTP MFA Validation
+      if (currentMfaTempToken) {
+        const enteredCode = mfaCodeInput ? mfaCodeInput.value.trim() : '';
+        if (!enteredCode) {
+          if (mfaError) mfaError.textContent = 'Please enter your 6-digit TOTP code or recovery key.';
+          return;
+        }
+
+        try {
+          const mfaRes = await fetch('/api/admin/mfa/validate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ tempToken: currentMfaTempToken, code: enteredCode })
+          });
+          const mfaData = await mfaRes.json();
+          if (mfaRes.ok && mfaData.success) {
+            sessionStorage.setItem('am_admin_session', mfaData.token);
+            sessionStorage.setItem('am_admin_role', 'admin');
+            if (mfaData.roleMapping) {
+              sessionStorage.setItem('am_admin_role_details', JSON.stringify(mfaData.roleMapping));
+            }
+            showToast('Two-factor authentication verified. Welcome back, Lead Admin!', 'success');
+            currentMfaTempToken = null;
+            if (mfaGroup) mfaGroup.style.display = 'none';
+            if (passcodeGroup) passcodeGroup.style.display = 'block';
+            if (loginBtnText) loginBtnText.textContent = 'Access as Admin';
+            showDashboard();
+            return;
+          } else {
+            if (mfaError) mfaError.textContent = mfaData.error || 'Invalid authentication code.';
+            return;
+          }
+        } catch (err) {
+          if (mfaError) mfaError.textContent = 'Error verifying code. Please check server connection.';
+          return;
+        }
+      }
+
+      // Step 1: Initial Login with Passcode / Role
       const enteredPass = adminPassInput.value.trim();
 
       try {
         const response = await fetch('/api/admin/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ password: enteredPass })
+          credentials: 'include',
+          body: JSON.stringify({
+            password: enteredPass,
+            role: selectedLoginRole
+          })
         });
 
         const data = await response.json();
 
         if (response.ok && data.success) {
+          // If server requires 2FA second factor
+          if (data.mfaRequired && data.tempToken) {
+            currentMfaTempToken = data.tempToken;
+            if (passcodeGroup) passcodeGroup.style.display = 'none';
+            if (mfaGroup) {
+              mfaGroup.style.display = 'block';
+              if (mfaCodeInput) mfaCodeInput.focus();
+            }
+            if (loginBtnText) loginBtnText.textContent = 'Verify 2FA Code';
+            showToast('Passcode confirmed. Please enter your 6-digit TOTP code.', 'info');
+            return;
+          }
+
           sessionStorage.setItem('am_admin_session', data.token);
-          showToast('Welcome back, Abhinash!', 'success');
+          const mappedRole = (data.roleMapping && data.roleMapping.role) || (data.user && data.user.role) || selectedLoginRole;
+          sessionStorage.setItem('am_admin_role', mappedRole);
+          if (data.roleMapping) {
+            sessionStorage.setItem('am_admin_role_details', JSON.stringify(data.roleMapping));
+          }
+
+          if (mappedRole === 'admin') {
+            showToast('Welcome back, Abhinash (Lead Admin)!', 'success');
+          } else {
+            showToast('Welcome! Logged in with Recruiter Review permissions.', 'success');
+          }
           showDashboard();
         } else {
           loginError.textContent = data.error || 'Incorrect passcode. Try again.';
         }
       } catch (err) {
-        // Fallback check if running purely static
-        if (enteredPass === 'Abhi0819@') {
-          sessionStorage.setItem('am_admin_session', 'static_token_ok');
-          showToast('Authenticated in offline mode', 'success');
+        // Fallback for purely static hosting (e.g. GitHub Pages without live server)
+        if (selectedLoginRole === 'recruiter' || selectedLoginRole === 'guest') {
+          sessionStorage.setItem('am_admin_session', 'demo_token_' + selectedLoginRole);
+          sessionStorage.setItem('am_admin_role', selectedLoginRole);
+          showToast(`Authenticated in static demo mode (${selectedLoginRole})`, 'info');
           showDashboard();
         } else {
-          loginError.textContent = 'Incorrect passcode.';
+          loginError.textContent = 'Backend authentication server unreachable. Administrator access requires the live server.';
         }
       }
     });
   }
 
   if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => {
+    logoutBtn.addEventListener('click', async () => {
+      const activeToken = sessionStorage.getItem('am_admin_session');
+      if (activeToken) {
+        try {
+          await fetch('/api/admin/logout', {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${activeToken}` }
+          });
+        } catch {
+          // Network errors during logout are non-blocking
+        }
+      }
       if (dbUnsubscribe) {
         try { dbUnsubscribe(); } catch (e) {}
         dbUnsubscribe = null;
       }
       sessionStorage.removeItem('am_admin_session');
-      showToast('Logged out of Admin Portal', 'info');
+      sessionStorage.removeItem('am_admin_role');
+      sessionStorage.removeItem('am_admin_role_details');
+      showToast('Logged out of Admin Portal. Session revoked.', 'info');
       showLogin();
+    });
+  }
+
+  // --- Security & MFA Modal Controller ---
+  const securitySettingsBtn = document.getElementById('securitySettingsBtn');
+  const mfaModal = document.getElementById('mfaModal');
+  const closeMfaModalBtn = document.getElementById('closeMfaModalBtn');
+  const mfaStatusText = document.getElementById('mfaStatusText');
+  const mfaActionContainer = document.getElementById('mfaActionContainer');
+  const mfaSetupSection = document.getElementById('mfaSetupSection');
+  const mfaSecretDisplay = document.getElementById('mfaSecretDisplay');
+  const mfaSetupCodeInput = document.getElementById('mfaSetupCodeInput');
+  const mfaSetupError = document.getElementById('mfaSetupError');
+  const confirmMfaSetupBtn = document.getElementById('confirmMfaSetupBtn');
+  const mfaBackupSection = document.getElementById('mfaBackupSection');
+  const mfaRecoveryKeysList = document.getElementById('mfaRecoveryKeysList');
+  const doneMfaSetupBtn = document.getElementById('doneMfaSetupBtn');
+
+  let activeSetupSecret = '';
+  let activeRecoveryCodes = [];
+
+  async function checkMfaStatus() {
+    const token = sessionStorage.getItem('am_admin_session');
+    if (!token) return;
+    try {
+      const res = await fetch('/api/admin/mfa/status', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        if (data.mfaEnabled) {
+          mfaStatusText.textContent = 'Active (Protected with TOTP)';
+          mfaStatusText.style.color = '#10b981';
+          mfaActionContainer.innerHTML = `
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">Your administrator account requires a 6-digit TOTP code on login.</p>
+            <button type="button" id="disableMfaBtn" class="btn btn-outline btn-sm" style="color:#ef4444; border-color:rgba(239,68,68,0.4);">Disable Two-Factor Authentication</button>
+          `;
+          const disableBtn = document.getElementById('disableMfaBtn');
+          if (disableBtn) {
+            disableBtn.addEventListener('click', async () => {
+              const pass = prompt('Enter your administrator password to disable 2FA:');
+              if (!pass) return;
+              const disRes = await fetch('/api/admin/mfa/disable', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ password: pass })
+              });
+              const disData = await disRes.json();
+              if (disRes.ok && disData.success) {
+                showToast('Two-factor authentication disabled.', 'info');
+                checkMfaStatus();
+              } else {
+                alert(disData.error || 'Failed to disable 2FA.');
+              }
+            });
+          }
+        } else {
+          mfaStatusText.textContent = 'Disabled (Single Factor)';
+          mfaStatusText.style.color = '#f59e0b';
+          mfaActionContainer.innerHTML = `
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">Protect your admin portal with an authenticator app (Google Authenticator, Microsoft Authenticator, etc.).</p>
+            <button type="button" id="startMfaSetupBtn" class="btn btn-primary btn-sm">Set Up Two-Factor Authentication</button>
+          `;
+          const startBtn = document.getElementById('startMfaSetupBtn');
+          if (startBtn) {
+            startBtn.addEventListener('click', startMfaSetup);
+          }
+        }
+      }
+    } catch {
+      mfaStatusText.textContent = 'Server Unreachable';
+    }
+  }
+
+  async function startMfaSetup() {
+    const token = sessionStorage.getItem('am_admin_session');
+    if (!token) return;
+    try {
+      const res = await fetch('/api/admin/mfa/setup', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        activeSetupSecret = data.secret;
+        activeRecoveryCodes = data.recoveryCodes || [];
+        mfaSecretDisplay.textContent = activeSetupSecret;
+        mfaSetupSection.style.display = 'block';
+        mfaSetupCodeInput.focus();
+      } else {
+        alert(data.error || 'Failed to initiate MFA setup.');
+      }
+    } catch {
+      alert('Error connecting to server for MFA setup.');
+    }
+  }
+
+  if (confirmMfaSetupBtn) {
+    confirmMfaSetupBtn.addEventListener('click', async () => {
+      const token = sessionStorage.getItem('am_admin_session');
+      const code = mfaSetupCodeInput.value.trim();
+      if (!code) {
+        mfaSetupError.textContent = 'Enter the 6-digit code from your authenticator app.';
+        return;
+      }
+      mfaSetupError.textContent = '';
+      try {
+        const res = await fetch('/api/admin/mfa/verify', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            secret: activeSetupSecret,
+            code,
+            recoveryCodes: activeRecoveryCodes
+          })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showToast('Two-factor authentication successfully enabled!', 'success');
+          mfaSetupSection.style.display = 'none';
+          mfaBackupSection.style.display = 'block';
+          mfaRecoveryKeysList.innerHTML = activeRecoveryCodes.map(c => `<span style="padding:4px 8px; background:rgba(255,255,255,0.06); border-radius:4px;">${c}</span>`).join('');
+        } else {
+          mfaSetupError.textContent = data.error || 'Invalid code.';
+        }
+      } catch {
+        mfaSetupError.textContent = 'Server error verifying code.';
+      }
+    });
+  }
+
+  if (doneMfaSetupBtn) {
+    doneMfaSetupBtn.addEventListener('click', () => {
+      mfaBackupSection.style.display = 'none';
+      checkMfaStatus();
+    });
+  }
+
+  if (securitySettingsBtn) {
+    securitySettingsBtn.addEventListener('click', () => {
+      const currentRole = sessionStorage.getItem('am_admin_role');
+      if (currentRole !== 'admin') {
+        showToast('Only Lead Administrator can configure Two-Factor Authentication.', 'error');
+        return;
+      }
+      if (mfaModal) {
+        mfaModal.style.display = 'flex';
+        mfaSetupSection.style.display = 'none';
+        mfaBackupSection.style.display = 'none';
+        checkMfaStatus();
+      }
+    });
+  }
+
+  if (closeMfaModalBtn && mfaModal) {
+    closeMfaModalBtn.addEventListener('click', () => {
+      mfaModal.style.display = 'none';
     });
   }
 
@@ -185,7 +547,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Fallback to Local Node Server API (if server.js is running)
     try {
-      const res = await fetch('/api/messages');
+      const token = sessionStorage.getItem('am_admin_session');
+      const res = await fetch('/api/messages', {
+        headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+        credentials: 'include'
+      });
       if (res.ok) {
         const data = await res.json();
         messages = data.messages || [];
@@ -290,7 +656,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="msg-snippet">${escapeHTML(msg.message)}</div>
           <div class="msg-status-icons">
             ${!msg.isRead ? '<span class="unread-dot" title="Unread"></span>' : ''}
-            ${msg.isStarred ? '<span class="star-indicator" title="Starred">★</span>' : ''}
+            ${msg.isStarred ? '<span class="star-indicator" title="Starred"><svg width="13" height="13" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>' : ''}
           </div>
         </div>
       `;
@@ -386,9 +752,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Local Node server API
     try {
+      const token = sessionStorage.getItem('am_admin_session');
       await fetch(`/api/messages/${id}`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+        },
+        credentials: 'include',
         body: JSON.stringify(updates)
       });
     } catch (e) {
@@ -427,6 +798,12 @@ document.addEventListener('DOMContentLoaded', () => {
     detailDeleteBtn.addEventListener('click', async () => {
       if (!activeMessageId) return;
 
+      const currentRole = sessionStorage.getItem('am_admin_role') || 'admin';
+      if (currentRole !== 'admin') {
+        showToast('Inquiry deletion is restricted to Lead Administrator.', 'warning');
+        return;
+      }
+
       const confirmed = confirm('Are you sure you want to permanently delete this inquiry?');
       if (!confirmed) return;
 
@@ -441,7 +818,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 2. Local Node server API
       try {
-        await fetch(`/api/messages/${activeMessageId}`, { method: 'DELETE' });
+        const token = sessionStorage.getItem('am_admin_session');
+        await fetch(`/api/messages/${activeMessageId}`, {
+          method: 'DELETE',
+          headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+          credentials: 'include'
+        });
       } catch (e) {
         // Fallback
       }

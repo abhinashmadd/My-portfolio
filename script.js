@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
       liveUrl: 'https://ai-ca-system.onrender.com',
       tags: ['Python', 'AI / ML', 'Workflow Automation', 'Financial Data Processing'],
       overview: 'An advanced AI-powered automation architecture designed to eliminate time-consuming, repetitive accounting calculations, reconciliation workflows, and compliance audits for practicing Chartered Accountants.',
-      problem: 'Chartered Accountants spend countless hours manually cross-referencing invoice statements, verifying tax deduction rates, matching ledger entries, and validating compliance data—leading to fatigue, potential compliance errors, and slow turnaround times.',
+      problem: 'Chartered Accountants spend countless hours manually cross-referencing invoice statements, verifying tax deduction rates, matching ledger entries, and validating compliance data, leading to fatigue, potential compliance errors, and slow turnaround times.',
       solution: 'Our team engineered an intelligent automation pipeline that ingests heterogeneous financial documents, categorizes transactions through ML algorithms, flags compliance anomalies automatically, and streamlines approval workflows into an interactive dashboard.',
       features: [
         'Automated reconciliation pipelines for high-volume transactions.',
@@ -427,6 +427,15 @@ document.addEventListener('DOMContentLoaded', () => {
         isValid = false;
       }
 
+      // Age & Privacy Consent validation
+      const ageConsentCheckbox = document.getElementById('ageConsentCheckbox');
+      const consentError = document.getElementById('consentError');
+      if (consentError) consentError.textContent = '';
+      if (ageConsentCheckbox && !ageConsentCheckbox.checked) {
+        if (consentError) consentError.textContent = 'Please certify that you are at least 16 years of age.';
+        isValid = false;
+      }
+
       if (!isValid) return;
 
       // Submit feedback simulation
@@ -444,6 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
         email: emailInput.value.trim(),
         subject: subjectInput.value.trim(),
         message: messageInput.value.trim(),
+        ageConsent: true,
         timestamp: new Date().toISOString()
       };
 
@@ -473,6 +483,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const serverPromise = fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(payload)
       }).catch(err => console.log('Local server dispatch:', err));
 
@@ -528,4 +539,35 @@ document.addEventListener('DOMContentLoaded', () => {
     revealElements.forEach(el => el.classList.add('revealed'));
   }
 
+  // ==========================================================================
+  // 11. COOKIE CONSENT BANNER CONTROLLER
+  // ==========================================================================
+  const cookieBanner = document.getElementById('cookieConsentBanner');
+  const cookieAcceptBtn = document.getElementById('cookieAcceptBtn');
+  const cookieDeclineBtn = document.getElementById('cookieDeclineBtn');
+
+  if (cookieBanner) {
+    const savedConsent = localStorage.getItem('am_cookie_consent');
+    if (!savedConsent) {
+      cookieBanner.style.display = 'flex';
+    }
+
+    if (cookieAcceptBtn) {
+      cookieAcceptBtn.addEventListener('click', () => {
+        localStorage.setItem('am_cookie_consent', 'accepted');
+        cookieBanner.style.display = 'none';
+        showToast('Preferences saved: Essential storage enabled.', 'info');
+      });
+    }
+
+    if (cookieDeclineBtn) {
+      cookieDeclineBtn.addEventListener('click', () => {
+        localStorage.setItem('am_cookie_consent', 'declined');
+        cookieBanner.style.display = 'none';
+        showToast('Preferences saved: Non-essential storage declined.', 'info');
+      });
+    }
+  }
+
 });
+

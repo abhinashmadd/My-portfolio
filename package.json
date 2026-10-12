@@ -1,0 +1,15 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "Production portfolio for Abhinash Maddeshiya - B.Tech ECE & Software Developer",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test-portfolio-auth.js"
+  },
+  "author": "Abhinash Maddeshiya <absmadd@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

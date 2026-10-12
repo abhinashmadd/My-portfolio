@@ -1,11 +1,24 @@
 # Dependencies
 node_modules/
 
+# Environment variables & secrets (CRITICAL: NEVER COMMIT)
+.env
+.env.*
+!.env.example
+*.env
+
 # Data files (contains messages - sensitive)
 data/
+*.db
+*.sqlite
 
-# Portable git artifacts
+# Logs
+*.log
+npm-debug.log*
+
+# Portable git artifacts / installers
 .git-portable.exe
+*.exe
 
 # OS files
 Thumbs.db
