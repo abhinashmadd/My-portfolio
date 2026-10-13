@@ -1526,7 +1526,13 @@ const server = http.createServer(async (req, res) => {
   fs.stat(resolvedPath, (err, stats) => {
     const corsHeaders = getCorsHeaders(req);
     if (err || !stats.isFile()) {
-      res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8', ...corsHeaders });
+        const notFoundPath = path.join(__dirname, '404.html');
+        if (fs.existsSync(notFoundPath)) {
+          const content = fs.readFileSync(notFoundPath);
+          res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8', ...corsHeaders });
+          return res.end(content);
+        }
+        res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8', ...corsHeaders });
       res.end(`
         <!DOCTYPE html>
         <html lang="en">

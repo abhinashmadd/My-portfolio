@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <title>404 — Page Not Found | Abhinash Maddeshiya</title>
+  <meta name="description" content="404 — Page not found. Return to Abhinash Maddeshiya's developer portfolio.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: #05080f;
+      color: #f8fafc;
+      padding: 24px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      margin: 0;
+    }
+    .error-container {
+      background: rgba(16, 24, 38, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 48px 36px;
+      max-width: 540px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+    .error-badge {
+      display: inline-block;
+      padding: 5px 14px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #38bdf8;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+    }
+    .error-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 0 0 14px;
+    }
+    .error-desc {
+      color: #94a3b8;
+      font-size: 15px;
+      line-height: 1.6;
+      margin: 0 0 28px;
+    }
+    .error-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .error-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .error-btn-primary {
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      color: #05080f;
+    }
+    .error-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(56, 189, 248, 0.3);
+    }
+    .error-btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #f8fafc;
+    }
+    .error-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  </style>
+</head>
+
+<body>
+  <main class="error-container">
+    <div class="error-badge">404 ERROR · PAGE NOT FOUND</div>
+    <h1 class="error-title">Looking for something else?</h1>
+    <p class="error-desc">
+      The page or project you're trying to reach does not exist, may have moved, or the link is outdated. Let's get you back to the portfolio.
+    </p>
+    <div class="error-actions">
+      <a href="index.html" class="error-btn error-btn-primary">Return to Portfolio ↗</a>
+      <a href="index.html#contact" class="error-btn error-btn-secondary">Contact Me</a>
+    </div>
+  </main>
+</body>
+
+</html>
