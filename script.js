@@ -176,6 +176,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const viewDetailBtns = document.querySelectorAll('.view-details-btn');
 
   const projectData = {
+    'nextstep-ai': {
+      title: 'NextStep AI | Evidence-Backed Career Intelligence & Assessment Platform',
+      badge: 'Code2Career AI Hackathon',
+      image: 'assets/nextstep-ai-dashboard.png',
+      liveUrl: 'https://nextstep-ai-7.onrender.com',
+      tags: ['AI & ML', 'NVIDIA NIM', 'Career Intelligence', 'Skill Graph Analysis', 'Code2Career Hackathon'],
+      overview: 'An evidence-backed student career guidance and capability mapping platform engineered for the Code2Career AI Hackathon (Azisly.ai & LIET). NextStep transforms real student project artifacts and verifiable evidence into grounded capability estimates and actionable next steps.',
+      problem: 'Traditional career preparation relies on self-reported claims, buzzword-dense resumes, and generic questionnaires that fail to demonstrate verifiable technical competence, leaving students uncertain about their readiness for industry engineering roles.',
+      solution: 'NextStep implements grounded career intelligence combining NVIDIA NIM AI with deterministic skill graph analysis. Students submit real coursework, code, and project evidence; the platform extracts demonstrated capabilities, tracks capability changes over time, and calculates multi-dimensional compatibility scores against industry role profiles.',
+      features: [
+        'Evidence-backed capability extraction: Analyzes real student projects and repository artifacts rather than unverified claims.',
+        'Multi-dimensional career role compatibility scoring powered by NVIDIA NIM AI and semantic retrieval.',
+        'Deterministic skill graph mapping with real-time capability change logs.',
+        'Built-in Privacy Center with GDPR Article 17 automated data deletion and data export features.',
+        'Engineered for competitive presentation at the Code2Career AI Hackathon (CF No: AZTL-585471244).'
+      ],
+      impact: 'Provides transparent, evidence-backed career roadmaps for students with zero black-box bias or ungrounded recommendations.'
+    },
     'ai-ca': {
       title: 'AI Chartered Accountants Automation System',
       badge: 'HackIndia 2026 Finalist',
