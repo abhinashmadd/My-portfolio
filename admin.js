@@ -325,14 +325,21 @@ document.addEventListener('DOMContentLoaded', () => {
           loginError.textContent = data.error || 'Incorrect passcode. Try again.';
         }
       } catch (err) {
-        // Fallback for purely static hosting (e.g. GitHub Pages without live server)
-        if (selectedLoginRole === 'recruiter' || selectedLoginRole === 'guest') {
+        // Fallback for purely static hosting (e.g. GitHub Pages without live Node.js backend)
+        if (selectedLoginRole === 'admin') {
+          if (enteredPass === 'Abhi0819@') {
+            sessionStorage.setItem('am_admin_session', 'static_admin_session_' + Date.now());
+            sessionStorage.setItem('am_admin_role', 'admin');
+            showToast('Welcome back, Abhinash (Lead Admin)!', 'success');
+            showDashboard();
+          } else {
+            loginError.textContent = 'Incorrect admin passcode. Try again.';
+          }
+        } else {
           sessionStorage.setItem('am_admin_session', 'demo_token_' + selectedLoginRole);
           sessionStorage.setItem('am_admin_role', selectedLoginRole);
-          showToast(`Authenticated in static demo mode (${selectedLoginRole})`, 'info');
+          showToast(`Authenticated in review mode (${selectedLoginRole})`, 'info');
           showDashboard();
-        } else {
-          loginError.textContent = 'Backend authentication server unreachable. Administrator access requires the live server.';
         }
       }
     });
