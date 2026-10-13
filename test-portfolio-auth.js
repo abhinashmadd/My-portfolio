@@ -614,6 +614,22 @@ async function runTests() {
     assert.strictEqual(res.headers['content-type'], 'image/svg+xml');
   });
 
+
+  await test('GET /api/compliance returns 200 OK with business details and legal routes', async () => {
+    const res = await doRequest('/api/compliance', { method: 'GET' });
+    assert.strictEqual(res.statusCode, 200);
+    assert.strictEqual(res.data.success, true);
+    assert.strictEqual(res.data.businessDetails.contactEmail, 'absmadd@gmail.com');
+    assert.strictEqual(res.data.routes.privacyPolicy, '/privacy-policy');
+  });
+
+  await test('GET /api/business-details returns 200 OK with direct contact information', async () => {
+    const res = await doRequest('/api/business-details', { method: 'GET' });
+    assert.strictEqual(res.statusCode, 200);
+    assert.strictEqual(res.data.success, true);
+    assert.strictEqual(res.data.email, 'absmadd@gmail.com');
+  });
+
   await test('GET /assets/code2career-hackathon-certificate.png returns 200 OK with image/png type', async () => {
     const res = await doRequest('/assets/code2career-hackathon-certificate.png', { method: 'GET' });
     assert.strictEqual(res.statusCode, 200);

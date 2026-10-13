@@ -736,6 +736,49 @@ const server = http.createServer(async (req, res) => {
   }
 
   // ========================================================================
+  // ========================================================================
+  // ROUTE: GET /api/compliance & /api/legal - Legal & Compliance Routing API
+  // ========================================================================
+  if ((pathname === '/api/compliance' || pathname === '/api/legal' || pathname === '/api/policies') && method === 'GET') {
+    return sendJSON(req, res, 200, {
+      success: true,
+      developer: 'Abhinash Maddeshiya',
+      businessDetails: {
+        entity: 'Abhinash Maddeshiya Developer Portfolio',
+        jurisdiction: 'Greater Noida, Uttar Pradesh, 201306, India',
+        contactEmail: 'absmadd@gmail.com',
+        phone: '+91 8881179002'
+      },
+      feePolicy: 'Zero hidden fees. All project showcases, source repositories, resumes, and contact inquiry channels are 100% free.',
+      communicationStandards: 'Direct professional communication only. No marketing newsletters or commercial spam are sent. Opt-out via email with subject UNSUBSCRIBE or via /api/data-deletion-request.',
+      declaration: 'I hereby declare that the information provided is true and correct to the best of my knowledge.',
+      routes: {
+        privacyPolicy: '/privacy-policy',
+        termsOfService: '/terms-of-service',
+        termsAndConditions: '/terms-and-conditions',
+        refundPolicy: '/refund-policy',
+        cookiePolicy: '/cookie-policy',
+        dataDeletion: '/api/data-deletion-request',
+        adminPortal: '/admin'
+      }
+    });
+  }
+
+  // ========================================================================
+  // ROUTE: GET /api/business-details - Official Contact & Business Details API
+  // ========================================================================
+  if (pathname === '/api/business-details' && method === 'GET') {
+    return sendJSON(req, res, 200, {
+      success: true,
+      name: 'Abhinash Maddeshiya',
+      title: 'B.Tech ECE Student & Software Developer',
+      location: 'Greater Noida, Uttar Pradesh, 201306, India',
+      email: 'absmadd@gmail.com',
+      phone: '+91 8881179002',
+      communication: 'Direct professional correspondence only.'
+    });
+  }
+
   // ROUTE: POST /api/data-deletion-request - User Privacy & GDPR/CCPA Erasure
   // ========================================================================
   if (pathname === '/api/data-deletion-request' && method === 'POST') {
