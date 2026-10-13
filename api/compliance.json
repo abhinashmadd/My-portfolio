@@ -1,0 +1,22 @@
+{
+  "success": true,
+  "developer": "Abhinash Maddeshiya",
+  "businessDetails": {
+    "entity": "Abhinash Maddeshiya Developer Portfolio",
+    "jurisdiction": "Greater Noida, Uttar Pradesh, 201306, India",
+    "contactEmail": "absmadd@gmail.com",
+    "phone": "+91 8881179002"
+  },
+  "feePolicy": "Zero hidden fees. All project showcases, source repositories, resumes, and contact inquiry channels are 100% free.",
+  "communicationStandards": "Direct professional communication only. No marketing newsletters or commercial spam are sent. Opt-out via email with subject UNSUBSCRIBE or via /api/data-deletion-request.",
+  "declaration": "I hereby declare that the information provided is true and correct to the best of my knowledge.",
+  "routes": {
+    "privacyPolicy": "privacy-policy.html",
+    "termsOfService": "terms-of-service.html",
+    "termsAndConditions": "terms-and-conditions.html",
+    "refundPolicy": "refund-policy.html",
+    "cookiePolicy": "cookie-policy.html",
+    "dataDeletion": "privacy-policy.html#data-deletion",
+    "adminPortal": "admin.html"
+  }
+}

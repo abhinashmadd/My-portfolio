@@ -739,7 +739,7 @@ const server = http.createServer(async (req, res) => {
   // ========================================================================
   // ROUTE: GET /api/compliance & /api/legal - Legal & Compliance Routing API
   // ========================================================================
-  if ((pathname === '/api/compliance' || pathname === '/api/legal' || pathname === '/api/policies') && method === 'GET') {
+  if ((pathname === '/api/compliance' || pathname === '/api/compliance.json' || pathname === '/api/legal' || pathname === '/api/legal.json' || pathname === '/api/policies') && method === 'GET') {
     return sendJSON(req, res, 200, {
       success: true,
       developer: 'Abhinash Maddeshiya',
@@ -767,7 +767,7 @@ const server = http.createServer(async (req, res) => {
   // ========================================================================
   // ROUTE: GET /api/business-details - Official Contact & Business Details API
   // ========================================================================
-  if (pathname === '/api/business-details' && method === 'GET') {
+  if ((pathname === '/api/business-details' || pathname === '/api/business-details.json') && method === 'GET') {
     return sendJSON(req, res, 200, {
       success: true,
       name: 'Abhinash Maddeshiya',
