@@ -190,6 +190,16 @@ async function runTests() {
     assert.strictEqual(res.statusCode, 403);
   });
 
+  await test('GET /data/mfa.json is blocked with 403 Forbidden', async () => {
+    const res = await doRequest('/data/mfa.json', { method: 'GET' });
+    assert.strictEqual(res.statusCode, 403);
+  });
+
+  await test('GET /script.sh is blocked with 403 Forbidden', async () => {
+    const res = await doRequest('/script.sh', { method: 'GET' });
+    assert.strictEqual(res.statusCode, 403);
+  });
+
   // ========================================================================
   // [4] INPUT SANITIZATION & CONTACT FORM
   // ========================================================================
@@ -322,6 +332,14 @@ async function runTests() {
     const res = await doRequest('/api/admin/me', {
       method: 'GET',
       headers: { 'Authorization': `Bearer ${tamperedSigToken}` }
+    });
+    assert.strictEqual(res.statusCode, 401);
+  });
+
+  await test('GET /api/admin/me rejects legacy static_token_ok with 401 Unauthorized', async () => {
+    const res = await doRequest('/api/admin/me', {
+      method: 'GET',
+      headers: { 'Authorization': 'Bearer static_token_ok' }
     });
     assert.strictEqual(res.statusCode, 401);
   });
@@ -566,6 +584,12 @@ async function runTests() {
     assert(res.data.includes('Privacy Policy'));
   });
 
+  await test('GET /terms-of-service returns 200 OK with terms of service text', async () => {
+    const res = await doRequest('/terms-of-service', { method: 'GET' });
+    assert.strictEqual(res.statusCode, 200);
+    assert(res.data.includes('Terms of Service') || res.data.includes('Terms'));
+  });
+
   await test('GET /terms-and-conditions returns 200 OK with terms text', async () => {
     const res = await doRequest('/terms-and-conditions', { method: 'GET' });
     assert.strictEqual(res.statusCode, 200);
@@ -588,6 +612,12 @@ async function runTests() {
     const res = await doRequest('/favicon.svg', { method: 'GET' });
     assert.strictEqual(res.statusCode, 200);
     assert.strictEqual(res.headers['content-type'], 'image/svg+xml');
+  });
+
+  await test('GET /assets/code2career-hackathon-certificate.png returns 200 OK with image/png type', async () => {
+    const res = await doRequest('/assets/code2career-hackathon-certificate.png', { method: 'GET' });
+    assert.strictEqual(res.statusCode, 200);
+    assert.strictEqual(res.headers['content-type'], 'image/png');
   });
 
   // ========================================================================

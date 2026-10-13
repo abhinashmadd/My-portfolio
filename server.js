@@ -51,11 +51,17 @@ function loadEnvironment() {
 loadEnvironment();
 
 const PORT = parseInt(process.env.PORT, 10) || 3000;
-const NODE_ENV = process.env.NODE_ENV || 'development';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Abhi0819@';
-const RECRUITER_PASSWORD = process.env.RECRUITER_PASSWORD || 'Recruiter2026';
-const SESSION_SECRET = process.env.SESSION_SECRET || 'am_sec_prod_e7b4198c34f590a823b1dc07a4192b6ef93751a0';
-const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || 'am_whsec_prod_4f9a12c8e3b7a5d91e0c2f8a4b6d8e0f';
+const NODE_ENV = process.env.NODE_ENV || 'production';
+const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH || '';
+const ADMIN_PASSWORD = ADMIN_PASSWORD_HASH || process.env.ADMIN_PASSWORD || 'Abhi0819@';
+const RECRUITER_PASSWORD_HASH = process.env.RECRUITER_PASSWORD_HASH || '';
+const RECRUITER_PASSWORD = RECRUITER_PASSWORD_HASH || process.env.RECRUITER_PASSWORD || 'Recruiter2026';
+const SESSION_SECRET = process.env.SESSION_SECRET || (NODE_ENV === 'production'
+  ? crypto.randomBytes(32).toString('hex')
+  : 'am_sec_prod_e7b4198c34f590a823b1dc07a4192b6ef93751a0');
+const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || (NODE_ENV === 'production'
+  ? crypto.randomBytes(32).toString('hex')
+  : 'am_whsec_prod_4f9a12c8e3b7a5d91e0c2f8a4b6d8e0f');
 const TRUST_PROXY = process.env.TRUST_PROXY === 'true';
 
 const DATA_DIR = path.join(__dirname, 'data');
@@ -203,10 +209,24 @@ function hashPassword(plainPassword) {
   return crypto.pbkdf2Sync(String(plainPassword), FIXED_SALT, 100000, 32, 'sha256');
 }
 
-function verifyPasswordTimingSafe(plainInput, targetPassword) {
-  if (typeof plainInput !== 'string' || typeof targetPassword !== 'string') return false;
+function verifyPasswordTimingSafe(plainInput, targetPasswordOrHash) {
+  if (typeof plainInput !== 'string' || typeof targetPasswordOrHash !== 'string') return false;
+
+  // Salted PBKDF2 hash verification: pbkdf2$<iterations>$<salt_hex>$<hash_hex>
+  if (targetPasswordOrHash.startsWith('pbkdf2$')) {
+    const parts = targetPasswordOrHash.split('$');
+    if (parts.length !== 4) return false;
+    const iterations = parseInt(parts[1], 10);
+    const salt = parts[2];
+    const expectedHashBuf = Buffer.from(parts[3], 'hex');
+    const actualHashBuf = crypto.pbkdf2Sync(plainInput, salt, iterations, expectedHashBuf.length, 'sha256');
+    if (actualHashBuf.length !== expectedHashBuf.length) return false;
+    return crypto.timingSafeEqual(actualHashBuf, expectedHashBuf);
+  }
+
+  // Fallback timing-safe comparison with fixed salt
   const hashA = hashPassword(plainInput);
-  const hashB = hashPassword(targetPassword);
+  const hashB = hashPassword(targetPasswordOrHash);
   return crypto.timingSafeEqual(hashA, hashB);
 }
 
@@ -391,16 +411,6 @@ function verifyToken(authHeader) {
   // Check revocation list
   if (revokedTokens.has(rawToken)) return null;
 
-  // Support legacy dev tokens only in non-production
-  if (NODE_ENV !== 'production') {
-    if (rawToken === 'static_token_ok') {
-      return { username: 'abhinash', name: 'Abhinash Maddeshiya', role: 'admin' };
-    }
-    if (rawToken === 'static_token_recruiter') {
-      return { username: 'recruiter', name: 'Technical Recruiter', role: 'recruiter' };
-    }
-  }
-
   if (!rawToken.startsWith('am_tok_')) return null;
 
   const tokenBody = rawToken.slice('am_tok_'.length);
@@ -579,7 +589,10 @@ const FORBIDDEN_EXACT_FILES = new Set([
   'test-portfolio-auth.js',
   'AGENTS.md',
   'README.md',
-  'CNAME'
+  'CNAME',
+  '.env',
+  '.env.example',
+  '.gitignore'
 ]);
 
 // ============================================================================
@@ -1375,7 +1388,7 @@ const server = http.createServer(async (req, res) => {
     }
   }
 
-  if ((pathname === '/privacy-policy' || pathname === '/privacy') && method === 'GET') {
+  if ((pathname === '/privacy-policy' || pathname === '/privacy' || pathname === '/privacy-policy.html') && method === 'GET') {
     const privacyPath = path.join(__dirname, 'privacy-policy.html');
     if (fs.existsSync(privacyPath)) {
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', ...getCorsHeaders(req) });
@@ -1384,7 +1397,16 @@ const server = http.createServer(async (req, res) => {
     }
   }
 
-  if ((pathname === '/terms-and-conditions' || pathname === '/terms') && method === 'GET') {
+  if ((pathname === '/terms-of-service' || pathname === '/terms-of-service.html' || pathname === '/tos') && method === 'GET') {
+    const tosPath = path.join(__dirname, 'terms-of-service.html');
+    if (fs.existsSync(tosPath)) {
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', ...getCorsHeaders(req) });
+      fs.createReadStream(tosPath).pipe(res);
+      return;
+    }
+  }
+
+  if ((pathname === '/terms-and-conditions' || pathname === '/terms' || pathname === '/terms-and-conditions.html') && method === 'GET') {
     const termsPath = path.join(__dirname, 'terms-and-conditions.html');
     if (fs.existsSync(termsPath)) {
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', ...getCorsHeaders(req) });
@@ -1393,7 +1415,7 @@ const server = http.createServer(async (req, res) => {
     }
   }
 
-  if ((pathname === '/refund-policy' || pathname === '/refund') && method === 'GET') {
+  if ((pathname === '/refund-policy' || pathname === '/refund' || pathname === '/refund-policy.html') && method === 'GET') {
     const refundPath = path.join(__dirname, 'refund-policy.html');
     if (fs.existsSync(refundPath)) {
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', ...getCorsHeaders(req) });
@@ -1402,7 +1424,7 @@ const server = http.createServer(async (req, res) => {
     }
   }
 
-  if ((pathname === '/cookie-policy' || pathname === '/cookies') && method === 'GET') {
+  if ((pathname === '/cookie-policy' || pathname === '/cookies' || pathname === '/cookie-policy.html') && method === 'GET') {
     const cookiePath = path.join(__dirname, 'cookie-policy.html');
     if (fs.existsSync(cookiePath)) {
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', ...getCorsHeaders(req) });
@@ -1461,13 +1483,25 @@ const server = http.createServer(async (req, res) => {
     baseName.startsWith('test-') ||
     safePath.startsWith('/data/') ||
     safePath.startsWith('/.agents/') ||
+    safePath.startsWith('/.git/') ||
+    safePath.startsWith('/.vscode/') ||
     ext === '.map' ||
+    ext === '.json' ||
     ext === '.log' ||
     ext === '.sqlite' ||
     ext === '.db' ||
     ext === '.exe' ||
     ext === '.tmp' ||
-    ext === '.bak'
+    ext === '.bak' ||
+    ext === '.sh' ||
+    ext === '.bat' ||
+    ext === '.cmd' ||
+    ext === '.ps1' ||
+    ext === '.yml' ||
+    ext === '.yaml' ||
+    ext === '.ini' ||
+    ext === '.conf' ||
+    ext === '.config'
   ) {
     res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8', ...SECURITY_HEADERS });
     res.end('Access Denied: Protected system file');

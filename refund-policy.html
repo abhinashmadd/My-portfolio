@@ -65,15 +65,18 @@
 </head>
 <body>
 
+  <!-- Accessible Skip to Main Content Link -->
+  <a href="#mainContent" class="skip-link">Skip to main content</a>
+
   <!-- Top Navigation Bar -->
   <header class="header glass-panel">
     <div class="container header-container">
-      <a href="/" class="brand-logo" aria-label="Abhinash Maddeshiya - Home">
+      <a href="index.html" class="brand-logo" aria-label="Abhinash Maddeshiya - Home">
         <span class="logo-symbol">&lt;AM/&gt;</span>
         <span class="logo-name">Abhinash Maddeshiya</span>
       </a>
       <div class="header-actions">
-        <a href="/" class="btn btn-outline btn-sm">
+        <a href="index.html" class="btn btn-outline btn-sm">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
           <span>Back to Portfolio</span>
         </a>
@@ -81,7 +84,7 @@
     </div>
   </header>
 
-  <main class="container">
+  <main id="mainContent" class="container">
     <section class="legal-page-header">
       <span class="legal-meta">Effective Date: October 2026</span>
       <h1 class="section-title">Refund &amp; Service Policy</h1>
@@ -148,15 +151,67 @@
   <footer class="footer">
     <div class="container footer-bottom">
       <p>&copy; 2026 Abhinash Maddeshiya. All rights reserved.</p>
-      <div class="footer-legal-links" style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
-        <a href="/privacy-policy.html" style="color: var(--text-secondary);">Privacy Policy</a>
-        <a href="/terms-and-conditions.html" style="color: var(--text-secondary);">Terms &amp; Conditions</a>
-        <a href="/refund-policy.html" style="color: var(--accent-cyan);">Refund Policy</a>
-        <a href="/cookie-policy.html" style="color: var(--text-secondary);">Cookie Policy</a>
-        <a href="/admin" style="color: var(--text-secondary);">Admin Portal</a>
+      <div class="footer-legal-links" style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin: 12px 0;">
+        <a href="privacy-policy.html" style="color: var(--text-secondary);">Privacy Policy</a>
+        <a href="terms-of-service.html" style="color: var(--text-secondary);">Terms of Service</a>
+        <a href="terms-and-conditions.html" style="color: var(--text-secondary);">Terms &amp; Conditions</a>
+        <a href="refund-policy.html" style="color: var(--accent-cyan);">Refund Policy</a>
+        <a href="cookie-policy.html" style="color: var(--text-secondary);">Cookie Policy</a>
+        <a href="admin.html" style="color: var(--text-secondary);">Admin Portal</a>
       </div>
+      <p style="font-size: 0.82rem; color: var(--text-muted); margin: 6px 0;">
+        <strong>Business Details:</strong> Greater Noida, Uttar Pradesh, 201306, India | <strong>Direct Contact:</strong> <a href="mailto:absmadd@gmail.com" style="color: var(--text-secondary);">absmadd@gmail.com</a> | +91 8881179002
+      </p>
     </div>
   </footer>
 
+  <!-- COOKIE CONSENT BANNER -->
+  <aside id="cookieConsentBanner" class="cookie-banner glass-panel" role="dialog" aria-label="Cookie consent banner" aria-describedby="cookieBannerText" style="display: none;">
+    <div class="cookie-banner-content">
+      <div class="cookie-banner-header">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 2a14.5 14.5 0 0 0 0 20 10 10 0 0 0 10-10"/>
+          <circle cx="8.5" cy="8.5" r="1.5" fill="#38bdf8"/>
+          <circle cx="15.5" cy="15.5" r="1.5" fill="#38bdf8"/>
+          <circle cx="15.5" cy="8.5" r="1.5" fill="#38bdf8"/>
+        </svg>
+        <span class="cookie-banner-title">Cookie &amp; Privacy Preferences</span>
+      </div>
+      <p id="cookieBannerText" class="cookie-banner-desc">
+        We respect your privacy. This website uses strictly necessary local storage to remember your theme preference and maintain secure sessions. We do not use third-party tracking, profiling, or advertising cookies. Review our <a href="cookie-policy.html" class="link-hover">Cookie Policy</a> and <a href="privacy-policy.html" class="link-hover">Privacy Policy</a>.
+      </p>
+    </div>
+    <div class="cookie-banner-actions">
+      <button type="button" id="cookieAcceptBtn" class="btn btn-primary btn-sm">Accept Necessary</button>
+      <button type="button" id="cookieDeclineBtn" class="btn btn-secondary btn-sm">Decline Non-Essential</button>
+      <a href="cookie-policy.html" class="btn btn-outline btn-sm">Cookie Details</a>
+    </div>
+  </aside>
+
+  <script>
+    const cookieBanner = document.getElementById('cookieConsentBanner');
+    const cookieAcceptBtn = document.getElementById('cookieAcceptBtn');
+    const cookieDeclineBtn = document.getElementById('cookieDeclineBtn');
+
+    if (cookieBanner) {
+      const savedConsent = localStorage.getItem('am_cookie_consent');
+      if (!savedConsent) {
+        cookieBanner.style.display = 'flex';
+      }
+      if (cookieAcceptBtn) {
+        cookieAcceptBtn.addEventListener('click', () => {
+          localStorage.setItem('am_cookie_consent', 'accepted');
+          cookieBanner.style.display = 'none';
+        });
+      }
+      if (cookieDeclineBtn) {
+        cookieDeclineBtn.addEventListener('click', () => {
+          localStorage.setItem('am_cookie_consent', 'declined');
+          cookieBanner.style.display = 'none';
+        });
+      }
+    }
+  </script>
 </body>
 </html>

@@ -500,7 +500,9 @@ document.addEventListener('DOMContentLoaded', () => {
           name: payload.name,
           email: payload.email,
           subject: payload.subject,
-          message: payload.message
+          message: payload.message,
+          _template: 'table',
+          _autoresponse: `Thank you for reaching out to Abhinash Maddeshiya. I have received your message regarding "${payload.subject}". I will review your inquiry and reply directly.\n\nBusiness Details: Abhinash Maddeshiya, Greater Noida, UP, 201306, India. Contact: absmadd@gmail.com | +91 8881179002\n\nPrivacy & Opt-Out: We do not send marketing newsletters or spam. To opt out or request complete record erasure at any time, reply to this email with "UNSUBSCRIBE" or submit an automated request at: https://abhinashmaddheshiya.dev/privacy-policy.html#data-deletion`
         })
       }).catch(err => console.log('Email forwarding dispatch:', err));
 
@@ -545,11 +547,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const cookieBanner = document.getElementById('cookieConsentBanner');
   const cookieAcceptBtn = document.getElementById('cookieAcceptBtn');
   const cookieDeclineBtn = document.getElementById('cookieDeclineBtn');
+  const cookieCloseBtn = document.getElementById('cookieCloseBtn');
 
   if (cookieBanner) {
     const savedConsent = localStorage.getItem('am_cookie_consent');
     if (!savedConsent) {
       cookieBanner.style.display = 'flex';
+    }
+
+    if (cookieCloseBtn) {
+      cookieCloseBtn.addEventListener('click', () => {
+        cookieBanner.style.display = 'none';
+      });
     }
 
     if (cookieAcceptBtn) {
